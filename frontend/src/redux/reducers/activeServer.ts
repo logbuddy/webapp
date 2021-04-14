@@ -219,6 +219,11 @@ export const retrieveYetUnseenEventsCommand = () => (dispatch: ThunkDispatch<IRe
         return;
     }
 
+    if (!getState().activeServer.pollForYetUnseenEvents) {
+        repeat();
+        return;
+    }
+
     dispatch(retrieveYetUnseenEventsStartedEvent());
 
     let responseWasOk = true;
