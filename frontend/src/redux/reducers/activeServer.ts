@@ -214,6 +214,12 @@ export const retrieveYetUnseenEventsCommand = () => (dispatch: ThunkDispatch<IRe
         }
     }
 
+    const serverId = `${getState().activeServer.server.id}`;
+
+    if (serverId === 'null') {
+        return;
+    }
+
     if (getState().activeServer.retrieveYetUnseenEventsOperation.isRunning) {
         console.warn(`A retrieveYetUnseenEventsCommand is already running, aborting.`);
         return;
@@ -233,7 +239,7 @@ export const retrieveYetUnseenEventsCommand = () => (dispatch: ThunkDispatch<IRe
         getState().session.webappApiKeyId,
         null,
         {
-            serverId: `${getState().activeServer.server.id}`,
+            serverId: serverId,
             latestSeenSortValue: `${getState().activeServer.server.latestEventSortValue}`,
             selectedTimelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(getState().activeServer.selectedTimelineIntervalStart),
             selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(getState().activeServer.selectedTimelineIntervalEnd)
