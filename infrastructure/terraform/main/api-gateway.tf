@@ -18,7 +18,7 @@ resource "aws_apigatewayv2_integration" "xkcd" {
 }
 
 resource "aws_apigatewayv2_route" "example" {
-  api_id    = aws_apigatewayv2_api.default
+  api_id    = aws_apigatewayv2_api.default.id
   route_key = "GET /{proxy+}"
 
   target = "integrations/${aws_apigatewayv2_integration.xkcd.id}"
