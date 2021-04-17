@@ -9,17 +9,17 @@ resource "aws_apigatewayv2_stage" "default_api" {
   auto_deploy = true
 }
 
-resource "aws_apigatewayv2_integration" "xkcd" {
+resource "aws_apigatewayv2_integration" "lambda_rest_api_default" {
   api_id           = aws_apigatewayv2_api.default.id
-  integration_type = "HTTP_PROXY"
+  integration_type = "AWS_PROXY"
 
-  integration_method = "ANY"
-  integration_uri    = "https://xkcd.com/info.0.json"
+  integration_method = "POST"
+  integration_uri    = aws_lambda_function.rest_api_default.invoke_arn
 }
 
 resource "aws_apigatewayv2_route" "example" {
   api_id    = aws_apigatewayv2_api.default.id
-  route_key = "GET /{proxy+}"
+  route_key = "ANY /{proxy+}"
 
-  target = "integrations/${aws_apigatewayv2_integration.xkcd.id}"
+  target = "integrations/${aws_apigatewayv2_integration.lambda_rest_api_default.id}"
 }
