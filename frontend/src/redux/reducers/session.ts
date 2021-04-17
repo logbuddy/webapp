@@ -64,7 +64,7 @@ export const registerAccountCommand = (email: string, password: string) => (disp
     dispatch(registerAccountStartedEvent());
 
     let responseWasOk = true;
-    apiFetch('/users', 'POST', null, JSON.stringify({email, password}))
+    apiFetch('/users/', 'POST', null, JSON.stringify({email, password}))
         .then(response => {
             console.debug(response);
             if (!response.ok) {
@@ -124,7 +124,7 @@ export const logIntoAccountCommand = (email: string, password: string) => (dispa
     dispatch(logIntoAccountStartedEvent());
 
     let responseWasOk = true;
-    apiFetch('/webapp-api-keys', 'POST', null, JSON.stringify({email, password}))
+    apiFetch('/webapp-api-keys/', 'POST', null, JSON.stringify({email, password}))
         .then(response => {
             console.debug(response);
             if (!response.ok) {

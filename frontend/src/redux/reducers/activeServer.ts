@@ -234,12 +234,12 @@ export const retrieveYetUnseenEventsCommand = () => (dispatch: ThunkDispatch<IRe
 
     let responseWasOk = true;
     apiFetch(
-        `/yet-unseen-server-events`,
+        `/servers/yet-unseen-events/`,
         'GET',
         getState().session.webappApiKeyId,
         null,
         {
-            serverId: serverId,
+            serverId,
             latestSeenSortValue: `${getState().activeServer.server.latestEventSortValue}`,
             selectedTimelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(getState().activeServer.selectedTimelineIntervalStart),
             selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(getState().activeServer.selectedTimelineIntervalEnd)
@@ -414,7 +414,7 @@ export const retrieveStructuredDataExplorerEventsCommand = () => (dispatch: Thun
 
     let responseWasOk = true;
     apiFetch(
-        '/server-events-by',
+        '/servers/events-by/',
         'GET',
         getState().session.webappApiKeyId,
         null,
@@ -473,15 +473,22 @@ const retrieveEventsSucceededEvent = (events: Array<IServerEvent>): IRetrieveEve
 
 export const retrieveEventsCommand = () => (dispatch: ThunkDispatch<IReduxState, void, IBasicAction>, getState: () => IReduxState) => {
 
+    if (getState().activeServer.server.id === null) {
+        return;
+    }
+
+    const serverId = `${getState().activeServer.server.id}`;
+
     dispatch(retrieveEventsStartedEvent());
 
     let responseWasOk = true;
     apiFetch(
-        `/servers/${getState().activeServer.server.id}/events`,
+        `/servers/events/`,
         'GET',
         getState().session.webappApiKeyId,
         null,
         {
+            serverId,
             selectedTimelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(getState().activeServer.selectedTimelineIntervalStart),
             selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(getState().activeServer.selectedTimelineIntervalEnd)
         }
@@ -541,15 +548,22 @@ const retrieveNumberOfEventsPerHourSucceededEvent = (numberOfEventsPerHour: Arra
 
 export const retrieveNumberOfEventsPerHourCommand = () => (dispatch: ThunkDispatch<IReduxState, void, IBasicAction>, getState: () => IReduxState) => {
 
+    if (getState().activeServer.server.id === null) {
+        return;
+    }
+
+    const serverId = `${getState().activeServer.server.id}`;
+
     dispatch(retrieveNumberOfEventsPerHourStartedEvent());
 
     let responseWasOk = true;
     apiFetch(
-        `/servers/${getState().activeServer.server.id}/number-of-events-per-hour`,
+        `/servers/number-of-events-per-hour`,
         'GET',
         getState().session.webappApiKeyId,
         null,
         {
+            serverId,
             timelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(getState().activeServer.timelineIntervalStart),
             timelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(getState().activeServer.timelineIntervalEnd)
         }

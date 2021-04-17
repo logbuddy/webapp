@@ -86,7 +86,7 @@ export const retrieveServersCommand = () => (dispatch: ThunkDispatch<IReduxState
 
     let responseWasOk = true;
     apiFetch(
-        '/servers',
+        '/servers/',
         'GET',
         getState().session.webappApiKeyId
     )
@@ -148,7 +148,7 @@ export const createServerCommand = (title: string) => (dispatch: ThunkDispatch<I
     dispatch(createServerStartedEvent());
 
     let responseWasOk = true;
-    apiFetch('/servers', 'POST', getState().session.webappApiKeyId, JSON.stringify({title}))
+    apiFetch('/servers/', 'POST', getState().session.webappApiKeyId, JSON.stringify({title}))
         .then(response => {
             console.debug(response);
             if (!response.ok) {

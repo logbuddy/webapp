@@ -40,6 +40,17 @@ resource "aws_iam_role_policy_attachment" "AWSLambdaBasicExecutionRole_to_lambda
   role = aws_iam_role.lambda_rest_api_default.name
 }
 
+
+data "aws_iam_policy" "AmazonDynamoDBFullAccess" {
+  arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonDynamoDBFullAccess_to_lambda_rest_api_default" {
+  policy_arn = data.aws_iam_policy.AmazonDynamoDBFullAccess.arn
+  role = aws_iam_role.lambda_rest_api_default.name
+}
+
+
 resource "aws_lambda_permission" "rest_api_default" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"

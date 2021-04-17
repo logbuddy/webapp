@@ -416,19 +416,19 @@ const handleRetrieveServerListRequest = async (event) => {
 const handleRetrieveServerEventsRequest = async (event) => {
     const webappApiKey = await authenticateWebappRequest(event.headers);
 
-    if (!(event.hasOwnProperty('pathParameters') && event.pathParameters.hasOwnProperty('serverId'))) {
+    if (!event.queryStringParameters.hasOwnProperty('serverId')) {
         return {
             statusCode: 400,
             headers: corsHeaders(event),
             body: JSON.stringify({
-                message: 'Problem with query path',
-                expectedRequestPath: '/servers/{serverId}/events',
-                actualRequestPath: event.rawPath
+                message: 'Problem with query string',
+                expectedQueryString: 'serverId=x',
+                actualQueryString: event.queryStringParameters
             }, null, 2)
         };
     }
 
-    const serverId = event.pathParameters.serverId;
+    const serverId = event.queryStringParameters.serverId;
 
     if (await serverBelongsToUser(serverId, webappApiKey.users_id) === false) {
         return {
@@ -497,19 +497,19 @@ const handleRetrieveServerEventsRequest = async (event) => {
 const handleRetrieveNumberOfServerEventsPerHourRequest = async (event) => {
     const webappApiKey = await authenticateWebappRequest(event.headers);
 
-    if (!(event.hasOwnProperty('pathParameters') && event.pathParameters.hasOwnProperty('serverId'))) {
+    if (!event.queryStringParameters.hasOwnProperty('serverId')) {
         return {
             statusCode: 400,
             headers: corsHeaders(event),
             body: JSON.stringify({
-                message: 'Problem with query path',
-                expectedRequestPath: '/servers/{serverId}/number-of-events-per-hour',
-                actualRequestPath: event.rawPath
+                message: 'Problem with query string',
+                expectedQueryString: 'serverId=x',
+                actualQueryString: event.queryStringParameters
             }, null, 2)
         };
     }
 
-    const serverId = event.pathParameters.serverId;
+    const serverId = event.queryStringParameters.serverId;
 
     if (await serverBelongsToUser(serverId, webappApiKey.users_id) === false) {
         return {
@@ -1050,35 +1050,35 @@ exports.handler = async (event) => {
 
     const routeKey = `${event.httpMethod} ${event.pathParameters.proxy}`;
 
-    if (routeKey === 'POST users') {
+    if (routeKey === 'POST users/') {
         return handleRegisterAccountRequest(event);
     }
 
-    if (routeKey === 'POST webapp-api-keys') {
+    if (routeKey === 'POST webapp-api-keys/') {
         return handleCreateWebappApiKeyRequest(event);
     }
 
-    if (routeKey === 'GET servers') {
+    if (routeKey === 'GET servers/') {
         return handleRetrieveServerListRequest(event);
     }
 
-    if (routeKey === 'POST servers') {
+    if (routeKey === 'POST servers/') {
         return handleCreateServerRequest(event);
     }
 
-    if (routeKey === 'GET servers/{serverId}/events') {
+    if (routeKey === 'GET servers/events/') {
         return handleRetrieveServerEventsRequest(event);
     }
 
-    if (routeKey === 'GET servers/{serverId}/number-of-events-per-hour') {
+    if (routeKey === 'GET servers/number-of-events-per-hour') {
         return handleRetrieveNumberOfServerEventsPerHourRequest(event);
     }
 
-    if (routeKey === 'GET yet-unseen-server-events') {
+    if (routeKey === 'GET servers/yet-unseen-events/') {
         return handleRetrieveYetUnseenServerEventsRequest(event);
     }
 
-    if (routeKey === 'GET server-events-by') {
+    if (routeKey === 'GET servers/events-by/') {
         return handleRetrieveServerEventsByRequest(event);
     }
 
