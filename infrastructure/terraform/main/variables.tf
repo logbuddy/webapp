@@ -1,3 +1,7 @@
+variable "deployment_number" {
+  type = string
+}
+
 variable "workspace_to_stage" {
   type = map(string)
   default = {

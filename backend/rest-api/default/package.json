@@ -1,0 +1,16 @@
+{
+  "name": "herodot-lambdas-restbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup ./src/index.js --file ./build/index.js --format es && pushd build && zip rest_api_default.zip ./index.js && popd"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "date-fns": "^2.20.0",
+    "rollup": "^2.44.0"
+  }
+}
