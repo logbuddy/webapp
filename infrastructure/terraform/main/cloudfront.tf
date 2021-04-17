@@ -38,7 +38,7 @@ resource "aws_cloudfront_origin_request_policy" "api_gateway_optimized" {
   }
 }
 
-resource "aws_cloudfront_distribution" "frontend" {
+resource "aws_cloudfront_distribution" "default" {
   enabled  = true
 
   aliases = [data.aws_route53_zone.root.name]
