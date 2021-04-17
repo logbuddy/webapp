@@ -40,17 +40,6 @@ resource "aws_iam_role_policy_attachment" "AWSLambdaBasicExecutionRole_to_lambda
   role = aws_iam_role.lambda_rest_api_default.name
 }
 
-
-data "aws_iam_policy" "AmazonDynamoDBFullAccess" {
-  arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
-}
-
-resource "aws_iam_role_policy_attachment" "AmazonDynamoDBFullAccess_to_lambda_rest_api_default" {
-  policy_arn = data.aws_iam_policy.AmazonDynamoDBFullAccess.arn
-  role = aws_iam_role.lambda_rest_api_default.name
-}
-
-
 resource "aws_lambda_permission" "rest_api_default" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
@@ -58,4 +47,40 @@ resource "aws_lambda_permission" "rest_api_default" {
   principal     = "apigateway.amazonaws.com"
 
   source_arn = "${aws_apigatewayv2_api.default.execution_arn}/*/*"
+}
+
+
+resource "aws_iam_policy" "dynamodb_default" {
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:GetItem",
+                "dynamodb:Query"
+            ],
+            "Resource": [
+                "${aws_dynamodb_table.credentials.arn}",
+                "${aws_dynamodb_table.server_events.arn}",
+                "${aws_dynamodb_table.server_events_by_key.arn}",
+                "${aws_dynamodb_table.server_events_by_key_value.arn}",
+                "${aws_dynamodb_table.server_events_by_value.arn}",
+                "${aws_dynamodb_table.servers.arn}",
+                "${aws_dynamodb_table.users.arn}",
+                "${aws_dynamodb_table.webapp_api_keys.arn}"
+            ]
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "dynamodb_default_to_lambda_rest_api_default" {
+  policy_arn = aws_iam_policy.dynamodb_default.arn
+  role = aws_iam_role.lambda_rest_api_default.name
 }

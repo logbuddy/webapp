@@ -3,7 +3,7 @@ import { DatetimeHelper } from '../../../../shared/src/index';
 const AWS = require('aws-sdk');
 const {'v1': uuidv1, 'v4': uuidv4} = require('uuid');
 
-const AWS_REGION = 'eu-central-1';
+const AWS_REGION = 'us-west-1';
 
 
 const consoleOp = true;
@@ -351,14 +351,12 @@ const getTimelineIntervalValues = (event) => {
 };
 
 
-const handleRetrieveServerListRequest = async (event) => {
+const handleRetrieveServersRequest = async (event) => {
     const webappApiKey = await authenticateWebappRequest(event.headers);
 
     if (webappApiKey === null) {
         return unknownWebappApiKeyIdResponse(event);
     }
-
-    const { selectedTimelineIntervalStart, selectedTimelineIntervalEnd } = getSelectedTimelineIntervalValues(event);
 
     const queryParamsServers = {
         TableName: 'servers',
@@ -386,8 +384,6 @@ const handleRetrieveServerListRequest = async (event) => {
     for (let i = 0; i < serversFromDbResult.Items.length; i++) {
 
         _console.debug('serversFromDbResult.Items[i].id', serversFromDbResult.Items[i].id);
-        _console.debug('selectedTimelineIntervalStart', selectedTimelineIntervalStart);
-        _console.debug('selectedTimelineIntervalEnd', selectedTimelineIntervalEnd);
 
         let type = 'default';
         if (serversFromDbResult.Items[i].hasOwnProperty('type')) {
@@ -1059,7 +1055,7 @@ exports.handler = async (event) => {
     }
 
     if (routeKey === 'GET servers/') {
-        return handleRetrieveServerListRequest(event);
+        return handleRetrieveServersRequest(event);
     }
 
     if (routeKey === 'POST servers/') {
