@@ -1,3 +1,24 @@
+resource "aws_cloudfront_cache_policy" "api_gateway_optimized" {
+  name        = "ApiGatewayOptimized"
+
+  default_ttl = 0
+  max_ttl     = 0
+  min_ttl     = 0
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    cookies_config {
+      cookie_behavior = "none"
+    }
+
+    headers_config {
+      header_behavior = "none"
+    }
+    query_strings_config {
+      query_string_behavior = "none"
+    }
+  }
+}
+
 resource "aws_cloudfront_origin_request_policy" "api_gateway_optimized" {
   name    = "ApiGatewayOptimized"
 
@@ -55,8 +76,11 @@ resource "aws_cloudfront_distribution" "frontend" {
 
 
   origin {
-    #domain_name = aws_apigatewayv2_stage.default_api.invoke_url
-    domain_name = "7et9z4m5z4.execute-api.us-west-1.amazonaws.com"
+    domain_name = replace(
+      replace(aws_apigatewayv2_stage.default_api.invoke_url, "https://", ""),
+      "/api",
+      ""
+    )
     origin_id = "api-gateway-default"
     custom_origin_config {
       http_port              = 80
@@ -66,19 +90,15 @@ resource "aws_cloudfront_distribution" "frontend" {
     }
   }
 
+
   ordered_cache_behavior {
-    allowed_methods = ["GET", "HEAD", "OPTIONS", "POST", "PUT", "DELETE"]
+    allowed_methods = ["GET", "HEAD", "OPTIONS", "POST", "PUT", "DELETE", "PATCH"]
     cached_methods  = ["GET", "HEAD", "OPTIONS"]
     path_pattern = "api*"
     target_origin_id = "api-gateway-default"
     viewer_protocol_policy = "https-only"
+    cache_policy_id = aws_cloudfront_cache_policy.api_gateway_optimized.id
     origin_request_policy_id = aws_cloudfront_origin_request_policy.api_gateway_optimized.id
-    forwarded_values {
-      query_string = true
-      cookies {
-        forward = "none"
-      }
-    }
   }
 
 
