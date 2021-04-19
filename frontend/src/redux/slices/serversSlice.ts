@@ -141,8 +141,6 @@ export const serversSlice = createSlice({
         });
 
 
-        builder.addCase(logOutOfAccountCommand.fulfilled, state => {
-            state = initialState;
-        });
+        builder.addCase(logOutOfAccountCommand.fulfilled, () => initialState);
     })
 });

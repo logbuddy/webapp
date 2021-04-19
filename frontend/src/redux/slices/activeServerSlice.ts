@@ -273,9 +273,7 @@ export const activeServerSlice = createSlice({
             state.server = action.payload;
         },
 
-        closeActiveServerCommand: state => {
-            state.server = initialState.server;
-        },
+        closeActiveServerCommand: () => initialState,
 
         cycleLogEventsPresentationModeCommand: state => {
             state.logEventsPresentationMode =
@@ -432,8 +430,6 @@ export const activeServerSlice = createSlice({
         });
 
 
-        builder.addCase(logOutOfAccountCommand.fulfilled, state => {
-            state = initialState;
-        });
+        builder.addCase(logOutOfAccountCommand.fulfilled, () => initialState);
     })
 });
