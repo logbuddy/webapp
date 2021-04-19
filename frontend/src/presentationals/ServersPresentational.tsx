@@ -6,11 +6,7 @@ import { Redirect } from 'react-router-dom';
 import ActiveServerPresentational from './ActiveServerPresentational';
 import { ArrowClockwise, Disc } from 'react-bootstrap-icons';
 import ErrorMessagePresentational from './ErrorMessagePresentational';
-import {
-    activeServerSlice,
-    retrieveEventsCommand,
-    retrieveYetUnseenEventsCommand
-} from '../redux/slices/activeServerSlice';
+import { activeServerSlice } from '../redux/slices/activeServerSlice';
 
 const ServersPresentational = () => {
 
@@ -52,11 +48,7 @@ const ServersPresentational = () => {
                         <div className='col server-headline-title'>
                             <h4
                                 className='mb-0 clickable'
-                                onClick={() => {
-                                    reduxDispatch(activeServerSlice.actions.makeServerActiveCommand(server));
-                                    reduxDispatch(retrieveEventsCommand());
-                                    reduxDispatch(retrieveYetUnseenEventsCommand());
-                                }}
+                                onClick={ () => reduxDispatch(activeServerSlice.actions.makeServerActiveCommand(server)) }
                             >
                                 {server.title}
                             </h4>

@@ -174,20 +174,15 @@ export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEven
         const server = thunkAPI.getState().activeServer.server ?? null;
 
         if (server === null) {
-            return;
-        }
-
-        if (thunkAPI.getState().activeServer.retrieveYetUnseenEventsOperation.isRunning) {
-            console.warn(`A retrieveYetUnseenEventsCommand is already running, aborting.`);
-            return;
+            return thunkAPI.rejectWithValue('server is null.');
         }
 
         if (!thunkAPI.getState().activeServer.pollForYetUnseenEvents) {
             repeat();
-            return;
+            return thunkAPI.rejectWithValue('Polling disabled, skipping.');
         }
 
-        return await apiFetch(
+        const result = await apiFetch(
             `/servers/yet-unseen-events/`,
             'GET',
             thunkAPI.getState().session.webappApiKeyId,
@@ -212,6 +207,10 @@ export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEven
                 console.error(error)
                 return thunkAPI.rejectWithValue(error.message);
             });
+
+        repeat();
+
+        return result;
     }
 );
 
