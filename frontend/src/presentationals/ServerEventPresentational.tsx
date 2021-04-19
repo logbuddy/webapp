@@ -7,7 +7,7 @@ import {
     LOG_EVENTS_PRESENTATION_MODE_COMPACT,
     LOG_EVENTS_PRESENTATION_MODE_DEFAULT, TLogEventsPresentationMode
 } from '../redux/slices/activeServer';
-import { IServerEvent } from '../redux/slices/servers';
+import { IServerEvent } from '../redux/slices/serversSlice';
 
 const ServerEventPresentational = (
     { event, serverType, showPayload, onClick, presentationMode }:

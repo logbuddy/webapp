@@ -1,9 +1,9 @@
 // @ts-ignore
 import { DatetimeHelper } from 'herodot-shared';
 import { apiFetch } from '../util';
-import { IServerEvent } from './servers';
 import { IBasicAction, IErrorAction, IOperation, IReduxState } from './root';
 import { ThunkDispatch } from 'redux-thunk';
+import { IServerEvent } from './serversSlice';
 
 
 export const LOG_EVENTS_PRESENTATION_MODE_DEFAULT = 0;

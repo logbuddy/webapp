@@ -23,11 +23,9 @@ const ServersPresentational = () => {
         return (<Redirect to='/login' />);
     }
 
-    /*
     if (reduxState.activeServer.server.id !== null) {
         return <ActiveServerPresentational />;
     }
-    */
 
     const serverElements = [];
     for (let server of reduxState.servers.servers) {

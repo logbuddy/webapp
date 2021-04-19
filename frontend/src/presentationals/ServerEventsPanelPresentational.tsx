@@ -8,10 +8,10 @@ import {
     LOG_EVENTS_PRESENTATION_MODE_DEFAULT,
     retrieveEventsCommand, switchPollForYetUnseenEventsCommand
 } from '../redux/slices/activeServer';
-import { IServerEvent } from '../redux/slices/servers';
 import ServerEventPresentational from './ServerEventPresentational';
 import PaginatorPresentational from './PaginatorPresentational';
 import { DiscFill } from 'react-bootstrap-icons';
+import { IServerEvent } from '../redux/slices/serversSlice';
 
 const itemsPerPage = 25;
 

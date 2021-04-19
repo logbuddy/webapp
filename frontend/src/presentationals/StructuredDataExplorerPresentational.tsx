@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 // @ts-ignore
 import { JsonHelper } from 'herodot-shared';
 import { IReduxState } from '../redux/slices/root';
-import { IServerEvent } from '../redux/slices/servers';
 import {
     addActiveStructuredDataExplorerAttributeCommand, removeActiveStructuredDataExplorerAttributeCommand,
     retrieveStructuredDataExplorerEventsCommand,
@@ -15,6 +14,7 @@ import { format } from 'date-fns';
 import DayzEventSkinPresentational from './eventSkins/dayz/DayzEventSkinPresentational';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { IServerEvent } from '../redux/slices/serversSlice';
 
 const getAttributesForEvent = (event: IServerEvent) => {
     let parsedJson = null;
