@@ -10,11 +10,17 @@ resource "aws_iam_policy" "dynamodb_default" {
                 "dynamodb:PutItem",
                 "dynamodb:BatchWriteItem",
                 "dynamodb:GetItem",
-                "dynamodb:Query"
+                "dynamodb:Query",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:DescribeStream",
+                "dynamodb:ListShards",
+                "dynamodb:ListStreams"
             ],
             "Resource": [
                 "${aws_dynamodb_table.credentials.arn}",
                 "${aws_dynamodb_table.server_events.arn}",
+                "${aws_dynamodb_table.server_events.arn}/stream/*",
                 "${aws_dynamodb_table.server_events_by_key.arn}",
                 "${aws_dynamodb_table.server_events_by_key_value.arn}",
                 "${aws_dynamodb_table.server_events_by_value.arn}",
@@ -136,4 +142,5 @@ resource "aws_lambda_event_source_mapping" "lambda_dynamodb_workers_json_breakdo
   event_source_arn  = aws_dynamodb_table.server_events.stream_arn
   function_name     = aws_lambda_function.dynamodb_workers_json_breakdown.arn
   starting_position = "LATEST"
+  depends_on = [aws_iam_policy.dynamodb_default]
 }

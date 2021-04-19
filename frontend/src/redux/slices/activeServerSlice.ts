@@ -166,7 +166,7 @@ export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEven
                     () => {
                         thunkAPI.dispatch(retrieveYetUnseenEventsCommand());
                     },
-                    2000
+                    6000
                 );
             }
         }
@@ -365,6 +365,7 @@ export const activeServerSlice = createSlice({
             state.retrieveEventsOperation.errorMessage = null;
             if (state.server !== null) {
                 state.server.events = action.payload;
+                state.server.latestEventSortValue = state.server.events[0].sortValue ?? null;
             }
         });
 
@@ -407,7 +408,21 @@ export const activeServerSlice = createSlice({
             state.retrieveYetUnseenEventsOperation.justFinishedSuccessfully = true;
             state.retrieveYetUnseenEventsOperation.isRunning= false;
             state.retrieveYetUnseenEventsOperation.errorMessage = null;
-            state.server?.events.concat(action.payload);
+            if (state.server !== null) {
+                for (let event of action.payload) {
+                    let exists = false;
+                    for (let existingEvent of state.server.events) {
+                        if (existingEvent.id === event.id) {
+                            exists = true;
+                        }
+                    }
+                    if (!exists) {
+                        state.server.events.unshift(event);
+                        console.debug(event);
+                    }
+                }
+                state.server.latestEventSortValue = state.server.events[0].sortValue;
+            }
         });
 
 

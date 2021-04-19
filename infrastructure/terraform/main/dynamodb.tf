@@ -28,6 +28,9 @@ resource "aws_dynamodb_table" "server_events" {
     name = "sort_value"
     type = "S"
   }
+
+  stream_enabled = true
+  stream_view_type = "NEW_IMAGE"
 }
 
 resource "aws_dynamodb_table" "server_events_by_key" {
