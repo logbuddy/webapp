@@ -12,8 +12,8 @@ export const LOG_EVENTS_PRESENTATION_MODE_COMPACT = 1;
 export type TLogEventsPresentationMode = 0 | 1;
 
 export interface IStructuredDataExplorerAttribute {
-    byName: string,
-    byVal: string
+    readonly byName: string,
+    readonly byVal: string
 }
 
 export interface IActiveServerState {

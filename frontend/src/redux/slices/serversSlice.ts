@@ -4,34 +4,34 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { logOutOfAccountCommand } from './sessionSlice';
 
 export interface IServerEvent {
-    id: string,
-    serverId: string,
-    userId: string,
-    receivedAt: number,
-    sortValue: string,
-    createdAt: string,
-    createdAtUtc: string,
-    source: string,
-    payload: string,
+    readonly id: string,
+    readonly serverId: string,
+    readonly userId: string,
+    readonly receivedAt: number,
+    readonly sortValue: string,
+    readonly createdAt: string,
+    readonly createdAtUtc: string,
+    readonly source: string,
+    readonly payload: string,
 }
 
 export interface IServer {
-    id: string,
-    type: string,
-    title: string,
-    userId: string,
-    apiKeyId: string,
-    events: Array<IServerEvent>,
-    structuredDataExplorerEvents: Array<IServerEvent>,
-    latestEventSortValue: null | string,
-    numberOfEventsPerHour: Array<number>
+    readonly id: string,
+    readonly type: string,
+    readonly title: string,
+    readonly userId: string,
+    readonly apiKeyId: string,
+    readonly events: Array<IServerEvent>,
+    readonly structuredDataExplorerEvents: Array<IServerEvent>,
+    readonly latestEventSortValue: null | string,
+    readonly numberOfEventsPerHour: Array<number>
 }
 
 export interface IServersState {
-    showEventPayload: boolean,
+    readonly showEventPayload: boolean,
     readonly retrieveServersOperation: IOperation,
     readonly createServerOperation: IOperation,
-    servers: Array<IServer>
+    readonly servers: Array<IServer>
 }
 
 export const initialState: IServersState = {
