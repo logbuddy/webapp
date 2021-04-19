@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import './index.scss';
-import configureStore from './redux/store';
+import { store } from './redux/store';
 import AppPresentational from './presentationals/AppPresentational';
 import { HashRouter as Router } from 'react-router-dom';
 
@@ -19,7 +19,7 @@ if (   urlParams.has('directLoginEmail')
     window.location = '/#/servers/';
 } else {
     ReactDOM.render(
-        <Provider store={configureStore()}>
+        <Provider store={store}>
             <Router>
                 <AppPresentational />
             </Router>

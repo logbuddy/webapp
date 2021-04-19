@@ -1,8 +1,9 @@
 import { apiFetch } from '../util';
 import { IBasicAction, IErrorAction, IOperation, IReduxState } from './root';
 import { ThunkDispatch } from 'redux-thunk';
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-export interface SessionState {
+export interface ISessionState {
     readonly isLoggedIn: boolean,
     readonly loggedInEmail: null | string,
     readonly webappApiKeyId: null | string,
@@ -10,7 +11,7 @@ export interface SessionState {
     readonly loginOperation: IOperation
 }
 
-const initialState: SessionState = {
+const initialState = {
     isLoggedIn: false,
     loggedInEmail: null,
     webappApiKeyId: null,
@@ -24,7 +25,29 @@ const initialState: SessionState = {
         justFinishedSuccessfully: false,
         errorMessage: null
     }
-};
+} as ISessionState;
+
+
+export const logIntoAccount = createAsyncThunk(
+    'session/logIntoAccount',
+    async (arg: { email: string, password: string }, thunkAPI) => {
+        const response = await { webAppApiKeyId: '42', email: 'rfuh@freuzfh.de' };
+        return response as { webAppApiKeyId: string, email: string };
+    }
+)
+
+export const sessionSlice = createSlice({
+    name: 'session',
+    initialState,
+    reducers: {
+
+    },
+    extraReducers: (builder => {
+        builder.addCase(logIntoAccount.fulfilled, (state, action) => {
+            action.payload.webAppApiKeyId
+        });
+    })
+});
 
 
 interface IRegisterAccountStartedEventAction extends IBasicAction {
@@ -186,7 +209,7 @@ export type TSessionAction =
     | ILogOutOfAccountSucceededEventAction;
 
 
-const reducer = (state = initialState, action: TSessionAction): SessionState => {
+const reducer = (state = initialState, action: TSessionAction): ISessionState => {
     switch (action.type) {
         case 'RegisterAccountStartedEvent':
             return {

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import ErrorMessagePresentational from './ErrorMessagePresentational';
 import { IReduxState } from '../redux/reducers/root';
-import { logIntoAccountCommand } from '../redux/reducers/session';
+import {logIntoAccount, logIntoAccountCommand} from '../redux/reducers/session';
 import { Redirect } from 'react-router-dom';
 
 const LoginPresentational = () => {
 
-    const reduxState = useSelector((state: IReduxState) => state);
-    const reduxDispatch = useDispatch();
+    const reduxState = useAppSelector((state) => state);
+    const reduxDispatch = useAppDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,7 +29,7 @@ const LoginPresentational = () => {
                     <h1>Login</h1>
                     <ErrorMessagePresentational message={reduxState.session.loginOperation.errorMessage} />
                     <form
-                        onSubmit={ e => { reduxDispatch(logIntoAccountCommand(email, password)); e.preventDefault(); } }
+                        onSubmit={ e => { reduxDispatch(logIntoAccount({ email, password })); e.preventDefault(); } }
                         className='mt-4'
                     >
                         <div className="mb-4">

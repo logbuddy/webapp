@@ -1,10 +1,10 @@
 import { AnyAction, combineReducers } from 'redux';
-import session, { TSessionAction, SessionState } from './session';
+import session, { sessionSlice, TSessionAction, ISessionState } from './session';
 import servers, { TServersAction, IServersState } from './servers';
 import activeServer, { TActiveServerAction, IActiveServerState } from './activeServer';
 
 export default combineReducers({
-    session,
+    session: sessionSlice,
     servers,
     activeServer
 });
@@ -24,7 +24,7 @@ export interface IOperation {
 }
 
 export interface IReduxState {
-    readonly session: SessionState,
+    readonly session: ISessionState,
     readonly servers: IServersState,
     readonly activeServer: IActiveServerState
 }
