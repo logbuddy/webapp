@@ -408,20 +408,20 @@ export const activeServerSlice = createSlice({
             state.retrieveYetUnseenEventsOperation.justFinishedSuccessfully = true;
             state.retrieveYetUnseenEventsOperation.isRunning= false;
             state.retrieveYetUnseenEventsOperation.errorMessage = null;
-            if (state.server !== null) {
+            let latestEventSortValue = null;
+            if (state.server !== null && action.payload.length > 0) {
+                if (state.server.events.length > 0) {
+                    latestEventSortValue = state.server.events[0].sortValue;
+                }
                 for (let event of action.payload) {
-                    let exists = false;
-                    for (let existingEvent of state.server.events) {
-                        if (existingEvent.id === event.id) {
-                            exists = true;
-                        }
-                    }
-                    if (!exists) {
+                    if (latestEventSortValue === null || event.sortValue > latestEventSortValue) {
                         state.server.events.unshift(event);
                         console.debug(event);
                     }
                 }
-                state.server.latestEventSortValue = state.server.events[0].sortValue;
+                if (state.server.events.length > 0) {
+                    state.server.latestEventSortValue = state.server.events[0].sortValue;
+                }
             }
         });
 
