@@ -30,14 +30,14 @@ const ServerExamplePanelPresentational = ({ server, isOpen, onSwitch }:
             <div className='mb-2 mt-2 bg-deepdark pt-2 ps-2 pe-3 rounded border border-dark border-3'>
                 <code><pre>{`curl \\
   -X POST \\
-  "https://rs213s9yml.execute-api.eu-central-1.amazonaws.com/server-events" \\
+  "https://app.logbuddy.io/api/server-events" \\
   -d '{ "userId": "${server.userId}",
         "apiKeyId": "${server.apiKeyId}",
         "serverId": "${server.id}",
         "events": [{
                      "createdAt": "'"$(date +"%Y-%m-%dT%H:%M:%S%z")"'",
                      "source": "uptime on '"$(hostname)"'",
-                     "payload": "'"$(uptime)"'"
+                     "payload": {"uptime": "'"$(uptime)"'"}
                    }]}'`}</pre></code>
             </div>
         }
