@@ -4,14 +4,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { DatetimeHelper } from 'herodot-shared';
 import { IReduxState } from '../redux/slices/root';
 import {
-    closeActiveServerCommand,
-    closeStructuredDataExplorerCommand,
+    activeServerSlice,
     retrieveEventsCommand,
     retrieveNumberOfEventsPerHourCommand,
     retrieveStructuredDataExplorerEventsCommand,
-    selectedTimelineIntervalsUpdatedEvent,
-    switchExamplePanelCommand
-} from '../redux/slices/activeServer';
+} from '../redux/slices/activeServerSlice';
 import { Redirect } from 'react-router-dom';
 import ServerTimelinePresentational from './ServerTimelinePresentational';
 import { X } from 'react-bootstrap-icons';
@@ -29,7 +26,7 @@ const ActiveServerPresentational = () => {
         reduxDispatch(retrieveNumberOfEventsPerHourCommand());
     }, [reduxDispatch]);
 
-    if (reduxState.activeServer.server.id === null) {
+    if (reduxState.activeServer.server?.id === null) {
         return (<Redirect to='/servers/' />);
     }
 
@@ -45,8 +42,11 @@ const ActiveServerPresentational = () => {
                 currentSelectedTimelineIntervalEnd={activeServer.selectedTimelineIntervalEnd}
                 timelineIntervalStart={activeServer.timelineIntervalStart}
                 timelineIntervalEnd={activeServer.timelineIntervalEnd}
-                numberOfEventsPerHour={server.numberOfEventsPerHour}
-                onUpdateCallback={ (start: Date, end: Date) => reduxDispatch(selectedTimelineIntervalsUpdatedEvent(start, end)) }
+                numberOfEventsPerHour={server?.numberOfEventsPerHour ?? []}
+                onUpdateCallback={ (start: Date, end: Date) => reduxDispatch(activeServerSlice.actions.selectedTimelineIntervalsUpdatedEvent({
+                    selectedTimelineIntervalStart: start,
+                    selectedTimelineIntervalEnd: end
+                })) }
                 onChangeCallback={ () => {
                     reduxDispatch(retrieveEventsCommand());
                     if (   activeServer.eventLoadedInStructuredDataExplorer !== null
@@ -58,13 +58,13 @@ const ActiveServerPresentational = () => {
             />
 
             {
-                activeServer.eventLoadedInStructuredDataExplorer !== null
+                (activeServer.eventLoadedInStructuredDataExplorer !== null)
                 &&
                 <div className='card bg-dark m-2 mt-4'>
                     <StructuredDataExplorerPresentational
-                        server={server}
+                        server={server!}
                         event={activeServer.eventLoadedInStructuredDataExplorer}
-                        onCloseClicked={ () => reduxDispatch(closeStructuredDataExplorerCommand()) }
+                        onCloseClicked={ () => reduxDispatch(activeServerSlice.actions.closeStructuredDataExplorerCommand()) }
                     />
                 </div>
             }
@@ -78,19 +78,19 @@ const ActiveServerPresentational = () => {
                             <div className='row'>
                                 <div className='text-primary col server-headline-icon'>
                                     {
-                                        (!server.hasOwnProperty('type') || server.type === null || server.type === 'default')
+                                        (!server!.hasOwnProperty('type') || server!.type === null || server!.type === 'default')
                                         &&
                                         <img src='assets/images/logbuddy-icon.png' width='26' className='pt-1 pe-1' alt='LogBuddy Icon' />
                                     }
                                     {
-                                        server.type === 'dayz'
+                                        server!.type === 'dayz'
                                         &&
                                         <img src='assets/images/event-skins/dayz/dayz-logo.png' width='26' className='pt-1 pe-1' alt='DayZ Logo' />
                                     }
                                 </div>
                                 <div className='col server-headline-title'>
                                     <h4 className='mb-0'>
-                                        {server.title}
+                                        {server!.title}
                                     </h4>
                                 </div>
 
@@ -99,7 +99,7 @@ const ActiveServerPresentational = () => {
                                         className='float-end clickable'
                                         width='36px'
                                         height='36px'
-                                        onClick={() => reduxDispatch(closeActiveServerCommand())}
+                                        onClick={() => reduxDispatch(activeServerSlice.actions.closeActiveServerCommand())}
                                     />
                                 </div>
                             </div>
@@ -108,9 +108,9 @@ const ActiveServerPresentational = () => {
                         <ServerInformationPanelContainer />
 
                         <ServerExamplePanelPresentational
-                            server={server}
+                            server={server!}
                             isOpen={activeServer.examplePanelIsOpen}
-                            onSwitch={() => reduxDispatch(switchExamplePanelCommand())}
+                            onSwitch={() => reduxDispatch(activeServerSlice.actions.switchExamplePanelCommand())}
                         />
 
                         <ServerEventsPanelPresentational />

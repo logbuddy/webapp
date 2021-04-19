@@ -3,18 +3,13 @@ import { useSelector, useDispatch } from 'react-redux'
 // @ts-ignore
 import { JsonHelper } from 'herodot-shared';
 import { IReduxState } from '../redux/slices/root';
-import {
-    addActiveStructuredDataExplorerAttributeCommand, removeActiveStructuredDataExplorerAttributeCommand,
-    retrieveStructuredDataExplorerEventsCommand,
-    selectActiveStructuredDataExplorerAttributeCommand,
-    IServer
-} from '../redux/slices/activeServer';
+import { retrieveStructuredDataExplorerEventsCommand, activeServerSlice } from '../redux/slices/activeServerSlice';
 import { DashCircle, Disc, PlusCircle, X } from 'react-bootstrap-icons';
 import { format } from 'date-fns';
 import DayzEventSkinPresentational from './eventSkins/dayz/DayzEventSkinPresentational';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import { IServerEvent } from '../redux/slices/serversSlice';
+import { IServer, IServerEvent } from '../redux/slices/serversSlice';
 
 const getAttributesForEvent = (event: IServerEvent) => {
     let parsedJson = null;
@@ -56,17 +51,17 @@ const StructuredDataExplorerPresentational = ({ event, server, onCloseClicked }:
     const keysValues = getAttributesForEvent(event).keysValues;
 
     const handleSelectAttributeClicked = (byName: string, byVal: string) => {
-        reduxDispatch(selectActiveStructuredDataExplorerAttributeCommand(byName, byVal));
+        reduxDispatch(activeServerSlice.actions.selectActiveStructuredDataExplorerAttributeCommand({ byName, byVal }));
         reduxDispatch(retrieveStructuredDataExplorerEventsCommand());
     }
 
     const handleAddAttributeClicked = (byName: string, byVal: string) => {
-        reduxDispatch(addActiveStructuredDataExplorerAttributeCommand(byName, byVal));
+        reduxDispatch(activeServerSlice.actions.addActiveStructuredDataExplorerAttributeCommand({ byName, byVal }));
         reduxDispatch(retrieveStructuredDataExplorerEventsCommand());
     }
 
     const handleRemoveAttributeClicked = (byName: string, byVal: string) => {
-        reduxDispatch(removeActiveStructuredDataExplorerAttributeCommand(byName, byVal));
+        reduxDispatch(activeServerSlice.actions.removeActiveStructuredDataExplorerAttributeCommand({ byName, byVal }));
     }
 
 
@@ -273,7 +268,7 @@ const StructuredDataExplorerPresentational = ({ event, server, onCloseClicked }:
     }
 
     const resultElements = [];
-    for (let event of reduxState.activeServer.server.structuredDataExplorerEvents) {
+    for (let event of reduxState.activeServer.server!.structuredDataExplorerEvents) {
         const { values, keys, keysValues } = getAttributesForEvent(event);
 
         const valueAttributeElements = [];

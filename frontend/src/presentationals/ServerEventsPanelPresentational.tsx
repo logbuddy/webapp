@@ -2,12 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { IReduxState } from '../redux/slices/root';
 import {
-    changeCurrentEventsResultPageCommand,
-    cycleLogEventsPresentationModeCommand,
-    loadEventIntoStructuredDataExplorerCommand,
+    activeServerSlice,
     LOG_EVENTS_PRESENTATION_MODE_DEFAULT,
-    retrieveEventsCommand, switchPollForYetUnseenEventsCommand
-} from '../redux/slices/activeServer';
+    retrieveEventsCommand
+} from '../redux/slices/activeServerSlice';
 import ServerEventPresentational from './ServerEventPresentational';
 import PaginatorPresentational from './PaginatorPresentational';
 import { DiscFill } from 'react-bootstrap-icons';
@@ -69,14 +67,14 @@ const ServerEventsPanelPresentational = () => {
     ;
 
     const serverEventPresentationalElements = [];
-    for (let event of filteredEventsForCurrentPage(server.events)) {
+    for (let event of filteredEventsForCurrentPage(server!.events)) {
         serverEventPresentationalElements.push(
             <Fragment key={event.id}>
                 <ServerEventPresentational
                     event={event}
-                    serverType={server.type}
+                    serverType={server!.type}
                     showPayload={activeServer.showEventPayload}
-                    onClick={ () => reduxDispatch(loadEventIntoStructuredDataExplorerCommand(event)) }
+                    onClick={ () => reduxDispatch(activeServerSlice.actions.loadEventIntoStructuredDataExplorerCommand(event)) }
                     presentationMode={activeServer.logEventsPresentationMode}
                 />
                 {
@@ -115,7 +113,7 @@ const ServerEventsPanelPresentational = () => {
 
             <div className='card-body bg-deepdark rounded p-2 ms-3 me-3 mb-3'>
                 {
-                    (filteredEvents(server.events).length === 0 && !activeServer.retrieveEventsOperation.isRunning)
+                    (filteredEvents(server!.events).length === 0 && !activeServer.retrieveEventsOperation.isRunning)
                     &&
                     <span>Not matching events. Try changing the filter and timerange.</span>
                 }
@@ -125,13 +123,13 @@ const ServerEventsPanelPresentational = () => {
                     <span>Retrieving log events...</span>
                 }
                 {
-                    (activeServer.retrieveEventsOperation.isRunning || filteredEvents(server.events).length === 0)
+                    (activeServer.retrieveEventsOperation.isRunning || filteredEvents(server!.events).length === 0)
                     ||
                     <PaginatorPresentational
-                        numberOfItems={filteredEvents(server.events).length}
+                        numberOfItems={filteredEvents(server!.events).length}
                         itemsPerPage={itemsPerPage}
                         currentPage={reduxState.activeServer.currentEventsResultPage}
-                        onPageClicked={ (page: number) => reduxDispatch(changeCurrentEventsResultPageCommand(page)) }
+                        onPageClicked={ (page: number) => reduxDispatch(activeServerSlice.actions.changeCurrentEventsResultPageCommand(page)) }
                     />
                 }
             </div>
@@ -142,7 +140,7 @@ const ServerEventsPanelPresentational = () => {
                 >
                     <div
                         className='d-inline-block clickable me-3 border-1 border-bottom border-secondary pb-1'
-                        onClick={ () => reduxDispatch(cycleLogEventsPresentationModeCommand()) }
+                        onClick={ () => reduxDispatch(activeServerSlice.actions.cycleLogEventsPresentationModeCommand()) }
                     >
                         {
                             reduxState.activeServer.logEventsPresentationMode === LOG_EVENTS_PRESENTATION_MODE_DEFAULT
@@ -158,7 +156,7 @@ const ServerEventsPanelPresentational = () => {
 
                     <div
                         className='d-inline-block clickable border-1 border-bottom border-secondary pb-1'
-                        onClick={ () => reduxDispatch(switchPollForYetUnseenEventsCommand()) }
+                        onClick={ () => reduxDispatch(activeServerSlice.actions.switchPollForYetUnseenEventsCommand()) }
                     >
                         {
                             reduxState.activeServer.pollForYetUnseenEvents
@@ -180,7 +178,7 @@ const ServerEventsPanelPresentational = () => {
             </div>
 
             {
-                (activeServer.retrieveEventsOperation.isRunning || filteredEvents(server.events).length === 0)
+                (activeServer.retrieveEventsOperation.isRunning || filteredEvents(server!.events).length === 0)
                 ||
                 <div className='card-body bg-dark pb-0 ms-2 me-2'>
                     {serverEventPresentationalElements}
@@ -188,14 +186,14 @@ const ServerEventsPanelPresentational = () => {
             }
 
             {
-                (filteredEvents(server.events).length > 5 && !activeServer.retrieveEventsOperation.isRunning)
+                (filteredEvents(server!.events).length > 5 && !activeServer.retrieveEventsOperation.isRunning)
                 &&
                 <div className='card-body bg-deepdark rounded p-2 ms-3 me-3 mb-3'>
                     <PaginatorPresentational
-                        numberOfItems={filteredEvents(server.events).length}
+                        numberOfItems={filteredEvents(server!.events).length}
                         itemsPerPage={itemsPerPage}
                         currentPage={reduxState.activeServer.currentEventsResultPage}
-                        onPageClicked={ (page: number) => reduxDispatch(changeCurrentEventsResultPageCommand(page)) }
+                        onPageClicked={ (page: number) => reduxDispatch(activeServerSlice.actions.changeCurrentEventsResultPageCommand(page)) }
                     />
                 </div>
             }

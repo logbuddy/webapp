@@ -1,10 +1,10 @@
 import { ThunkDispatch } from 'redux-thunk';
-import { configureStore } from '@reduxjs/toolkit';
+import { AnyAction, configureStore } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
-import { IReduxState, TValidAction } from './slices/root';
+import { IReduxState } from './slices/root';
 import { initialState as sessionInitialState, sessionSlice } from './slices/sessionSlice';
 import { initialState as serversInitialState, serversSlice } from './slices/serversSlice';
-import { initialState as activeServerInitialState } from './slices/activeServer';
+import { initialState as activeServerInitialState, activeServerSlice } from './slices/activeServerSlice';
 
 let preloadIsLoggedIn = sessionInitialState.isLoggedIn;
 let preloadLoggedInEmail = sessionInitialState.loggedInEmail;
@@ -33,7 +33,8 @@ const preloadedState: IReduxState = {
 export const store = configureStore({
     reducer: {
         session: sessionSlice.reducer,
-        servers: serversSlice.reducer
+        servers: serversSlice.reducer,
+        activeServer: activeServerSlice.reducer
     },
     preloadedState,
     devTools: true
@@ -44,5 +45,5 @@ export type AppDispatch = typeof store.dispatch;
 
 export interface IConnectedComponentProps {
     readonly reduxState: IReduxState,
-    readonly dispatch: ThunkDispatch<IReduxState, void, TValidAction>
+    readonly dispatch: ThunkDispatch<IReduxState, void, AnyAction>
 }

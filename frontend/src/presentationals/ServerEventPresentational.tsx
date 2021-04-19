@@ -6,7 +6,7 @@ import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import {
     LOG_EVENTS_PRESENTATION_MODE_COMPACT,
     LOG_EVENTS_PRESENTATION_MODE_DEFAULT, TLogEventsPresentationMode
-} from '../redux/slices/activeServer';
+} from '../redux/slices/activeServerSlice';
 import { IServerEvent } from '../redux/slices/serversSlice';
 
 const ServerEventPresentational = (

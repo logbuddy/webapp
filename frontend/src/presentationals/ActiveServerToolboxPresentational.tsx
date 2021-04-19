@@ -1,11 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { IReduxState } from '../redux/slices/root';
 import React, { Fragment } from 'react';
-import {
-    switchShowEventPayloadCommand,
-    switchShowStructuredDataExplorerAttributesCommand
-} from '../redux/slices/activeServer';
 import { FileEarmarkCode, FileEarmarkCodeFill } from 'react-bootstrap-icons';
+import { activeServerSlice } from '../redux/slices/activeServerSlice';
 
 const ActiveServerToolboxPresentational = () => {
 
@@ -26,7 +23,7 @@ const ActiveServerToolboxPresentational = () => {
                         &&
                         <div
                             className='small clickable d-inline-block'
-                            onClick={ () => reduxDispatch(switchShowStructuredDataExplorerAttributesCommand()) }
+                            onClick={ () => reduxDispatch(activeServerSlice.actions.switchShowStructuredDataExplorerAttributesCommand()) }
                         >
                     <span className="explorer-key-value-badge">
                         <span className="badge bg-primary ms-1 me-0 mb-1 explorer-key-value-badge-key">&nbsp;</span>
@@ -39,7 +36,7 @@ const ActiveServerToolboxPresentational = () => {
                         ||
                         <div
                             className='small clickable d-inline-block'
-                            onClick={ () => reduxDispatch(switchShowStructuredDataExplorerAttributesCommand()) }
+                            onClick={ () => reduxDispatch(activeServerSlice.actions.switchShowStructuredDataExplorerAttributesCommand()) }
                         >
                     <span className="explorer-key-value-badge">
                         <span className="badge bg-dark ms-1 me-0 mb-1 explorer-key-value-badge-key">&nbsp;</span>
@@ -55,7 +52,7 @@ const ActiveServerToolboxPresentational = () => {
                 &&
                 <div
                     className='clickable d-inline-block'
-                    onClick={ () => reduxDispatch(switchShowEventPayloadCommand()) }
+                    onClick={ () => reduxDispatch(activeServerSlice.actions.switchShowEventPayloadCommand()) }
                 >
                     <FileEarmarkCodeFill width='15px' height='15px' />
                 </div>
@@ -65,7 +62,7 @@ const ActiveServerToolboxPresentational = () => {
                 ||
                 <div
                     className='clickable d-inline-block'
-                    onClick={ () => reduxDispatch(switchShowEventPayloadCommand()) }
+                    onClick={ () => reduxDispatch(activeServerSlice.actions.switchShowEventPayloadCommand()) }
                 >
                     <FileEarmarkCode width='15px' height='15px' />
                 </div>

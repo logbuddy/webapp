@@ -4,9 +4,9 @@ import { IReduxState } from '../redux/slices/root';
 import { createServerCommand, retrieveServersCommand } from '../redux/slices/serversSlice';
 import { Redirect } from 'react-router-dom';
 import ActiveServerPresentational from './ActiveServerPresentational';
-import { makeServerActiveCommand } from '../redux/slices/activeServer';
 import { ArrowClockwise, Disc } from 'react-bootstrap-icons';
 import ErrorMessagePresentational from './ErrorMessagePresentational';
+import { activeServerSlice } from '../redux/slices/activeServerSlice';
 
 const ServersPresentational = () => {
 
@@ -23,7 +23,7 @@ const ServersPresentational = () => {
         return (<Redirect to='/login' />);
     }
 
-    if (reduxState.activeServer.server.id !== null) {
+    if (reduxState.activeServer.server !== null) {
         return <ActiveServerPresentational />;
     }
 
@@ -48,7 +48,7 @@ const ServersPresentational = () => {
                         <div className='col server-headline-title'>
                             <h4
                                 className='mb-0 clickable'
-                                onClick={() => reduxDispatch(makeServerActiveCommand(server))}
+                                onClick={() => reduxDispatch(activeServerSlice.actions.makeServerActiveCommand(server))}
                             >
                                 {server.title}
                             </h4>

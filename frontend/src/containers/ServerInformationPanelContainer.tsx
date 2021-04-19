@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { ChevronDown, ChevronRight, Clipboard } from 'react-bootstrap-icons';
-import { switchInformationPanelCommand} from '../redux/slices/activeServer';
 import { IConnectedComponentProps } from '../redux/store';
+import { activeServerSlice } from '../redux/slices/activeServerSlice';
 
 
 interface IReactState {
@@ -40,7 +40,7 @@ class ServerInformationPanelContainer extends Component<IConnectedComponentProps
             <div className='card-body bg-dark pb-0'>
                 <div
                     className='clickable'
-                    onClick={ () => this.props.dispatch(switchInformationPanelCommand()) }
+                    onClick={ () => this.props.dispatch(activeServerSlice.actions.switchInformationPanelCommand()) }
                 >
                     <span className='small align-text-bottom'>
                         {
@@ -69,13 +69,13 @@ class ServerInformationPanelContainer extends Component<IConnectedComponentProps
                                     <input
                                         type='text'
                                         className='form-control text-primary code border border-dark bg-dark'
-                                        value={`${server.id}`}
+                                        value={`${server?.id}`}
                                         readOnly={true}
                                         disabled={false}
-                                        ref={(element: HTMLInputElement) => this.copyElements[server.id + 'id'] = element}
+                                        ref={(element: HTMLInputElement) => this.copyElements[server?.id + 'id'] = element}
                                     />
                                     {
-                                        this.state.showCopySuccessBadgeForId === server.id + 'id'
+                                        this.state.showCopySuccessBadgeForId === server?.id + 'id'
                                         &&
                                         <div className='input-group-text border border-dark bg-secondary text-white fade-out-half'>
                                             <small>
@@ -86,7 +86,7 @@ class ServerInformationPanelContainer extends Component<IConnectedComponentProps
                                     <div
                                         className='btn btn-outline-secondary input-group-text text-light'
                                         onClick={() => {
-                                            this.copyCodeToClipboard(server.id + 'id');
+                                            this.copyCodeToClipboard(server?.id + 'id');
                                         }}
                                     >
                                         <Clipboard />
@@ -102,13 +102,13 @@ class ServerInformationPanelContainer extends Component<IConnectedComponentProps
                                     <input
                                         type='text'
                                         className='form-control text-primary code border border-dark bg-dark'
-                                        value={`${server.userId}`}
+                                        value={`${server?.userId}`}
                                         readOnly={true}
                                         disabled={false}
-                                        ref={(element: HTMLInputElement) => this.copyElements[server.id + 'userId'] = element}
+                                        ref={(element: HTMLInputElement) => this.copyElements[server?.id + 'userId'] = element}
                                     />
                                     {
-                                        this.state.showCopySuccessBadgeForId === server.id + 'userId'
+                                        this.state.showCopySuccessBadgeForId === server?.id + 'userId'
                                         &&
                                         <div className='input-group-text border border-dark bg-secondary text-white fade-out-half'>
                                             <small>
@@ -118,7 +118,7 @@ class ServerInformationPanelContainer extends Component<IConnectedComponentProps
                                     }
                                     <div
                                         className='btn btn-outline-secondary input-group-text text-light'
-                                        onClick={() => this.copyCodeToClipboard(server.id + 'userId')}
+                                        onClick={() => this.copyCodeToClipboard(server?.id + 'userId')}
                                     >
                                         <Clipboard />
                                     </div>
@@ -133,13 +133,13 @@ class ServerInformationPanelContainer extends Component<IConnectedComponentProps
                                     <input
                                         type='text'
                                         className='form-control text-primary code border border-dark bg-dark'
-                                        value={`${server.apiKeyId}`}
+                                        value={`${server?.apiKeyId}`}
                                         readOnly={true}
                                         disabled={false}
-                                        ref={(element: HTMLInputElement) => this.copyElements[server.id + 'apiKeyId'] = element}
+                                        ref={(element: HTMLInputElement) => this.copyElements[server?.id + 'apiKeyId'] = element}
                                     />
                                     {
-                                        this.state.showCopySuccessBadgeForId === server.id + 'apiKeyId'
+                                        this.state.showCopySuccessBadgeForId === server?.id + 'apiKeyId'
                                         &&
                                         <div className='input-group-text border border-dark bg-secondary text-white fade-out-half'>
                                             <small>
@@ -149,7 +149,7 @@ class ServerInformationPanelContainer extends Component<IConnectedComponentProps
                                     }
                                     <div
                                         className='btn btn-outline-secondary input-group-text text-light'
-                                        onClick={() => this.copyCodeToClipboard(server.id + 'apiKeyId')}
+                                        onClick={() => this.copyCodeToClipboard(server?.id + 'apiKeyId')}
                                     >
                                         <Clipboard />
                                     </div>

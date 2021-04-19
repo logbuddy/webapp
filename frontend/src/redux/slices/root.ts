@@ -1,15 +1,6 @@
-import { AnyAction } from 'redux';
 import { ISessionState } from './sessionSlice';
-import { TActiveServerAction, IActiveServerState } from './activeServer';
+import { IActiveServerState } from './activeServerSlice';
 import { IServersState } from './serversSlice';
-
-export interface IBasicAction extends AnyAction {
-    readonly type: string
-}
-
-export interface IErrorAction extends IBasicAction {
-    readonly errorMessage: string
-}
 
 export interface IOperation {
     readonly isRunning: boolean,
@@ -22,5 +13,3 @@ export interface IReduxState {
     readonly servers: IServersState,
     readonly activeServer: IActiveServerState
 }
-
-export type TValidAction = TActiveServerAction;
