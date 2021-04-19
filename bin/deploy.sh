@@ -9,6 +9,7 @@ AWS_ACCOUNT_ID="619527075300"
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
 [ -x /opt/homebrew/bin/brew ] && [ -s "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh" ] && source "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh"
 
+echo "$DEPLOYMENT_NUMBER" > "$DIR/../deployment_number"
 
 pushd "$DIR/../backend/rest-api/default" || exit
   rm -rf build
@@ -21,6 +22,21 @@ pushd "$DIR/../backend/rest-api/default" || exit
     zip -r rest_api_default.zip ./
     source "$DIR/../../infrastructure-bootstrap/bin/assume-role.sh" "$AWS_ACCOUNT_ID"
     aws s3 cp ./rest_api_default.zip "s3://herodot-infra-webapp-$STAGE-rest-api-lambdas/default/$DEPLOYMENT_NUMBER/rest_api_default.zip"
+    source "$DIR/../../infrastructure-bootstrap/bin/unassume-role.sh"
+  popd || exit
+popd || exit
+
+pushd "$DIR/../backend/dynamodb-workers/json-breakdown" || exit
+  rm -rf build
+  nvm install
+  nvm use
+  npm i --no-save
+  npm run build
+  cp -a node_modules build/
+  pushd build || exit
+    zip -r dynamodb_workers_json_breakdown.zip ./
+    source "$DIR/../../infrastructure-bootstrap/bin/assume-role.sh" "$AWS_ACCOUNT_ID"
+    aws s3 cp ./dynamodb_workers_json_breakdown.zip "s3://herodot-infra-webapp-$STAGE-dynamodb-workers-lambdas/json_breakdown/$DEPLOYMENT_NUMBER/dynamodb_workers_json_breakdown.zip"
     source "$DIR/../../infrastructure-bootstrap/bin/unassume-role.sh"
   popd || exit
 popd || exit

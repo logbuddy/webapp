@@ -1,10 +1,10 @@
 {
-  "name": "herodot-lambdas-restbackend",
+  "name": "herodot-backend-rest-api-default",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rollup ./src/index.js --file ./build/index.js --format es && pushd build && zip rest_api_default.zip ./index.js && popd"
+    "build": "rm -rf build && rollup ./src/index.js --file ./build/index.js --format es && pushd build && zip rest_api_default.zip ./index.js && popd"
   },
   "author": "",
   "license": "ISC",

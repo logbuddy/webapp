@@ -13,3 +13,9 @@ resource "aws_s3_bucket" "rest_api_lambdas" {
   force_destroy = "false"
   acl = "private"
 }
+
+resource "aws_s3_bucket" "dynamodb_workers_lambdas" {
+  bucket = "herodot-infra-webapp-${lookup(var.workspace_to_stage, terraform.workspace)}-dynamodb-workers-lambdas"
+  force_destroy = "false"
+  acl = "private"
+}

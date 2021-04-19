@@ -1,0 +1,16 @@
+{
+  "name": "herodot-backend-dynamodb-workers-json-breakdown",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf build && rollup ./src/index.js --file ./build/index.js --format es && pushd build && zip dynamodb_workers_json_breakdown.zip ./index.js && popd"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^14.14.37",
+    "aws-sdk": "^2.882.0",
+    "rollup": "^2.44.0"
+  }
+}
