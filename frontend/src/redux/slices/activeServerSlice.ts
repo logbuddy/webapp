@@ -166,7 +166,7 @@ export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEven
                     () => {
                         thunkAPI.dispatch(retrieveYetUnseenEventsCommand());
                     },
-                    6000
+                    2000
                 );
             }
         }
