@@ -1,11 +1,10 @@
-import { compose } from 'redux';
-import thunk, { ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from 'redux-thunk';
 import { configureStore } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
-import {IReduxState, reducer, TValidAction} from './reducers/root';
-import {initialState as sessionInitialState, sessionSlice} from './reducers/session';
-import { initialState as serversInitialState } from './reducers/servers';
-import { initialState as activeServerInitialState } from './reducers/activeServer';
+import { IReduxState, TValidAction } from './slices/root';
+import { initialState as sessionInitialState, sessionSlice } from './slices/sessionSlice';
+import { initialState as serversInitialState, serversSlice } from './slices/serversSlice';
+import { initialState as activeServerInitialState } from './slices/activeServer';
 
 let preloadIsLoggedIn = sessionInitialState.isLoggedIn;
 let preloadLoggedInEmail = sessionInitialState.loggedInEmail;
@@ -28,21 +27,13 @@ const preloadedState: IReduxState = {
         webappApiKeyId: preloadWebappApiKeyId
     },
     servers: serversInitialState,
-    // @ts-ignore
     activeServer: activeServerInitialState
 };
 
-// export default function configureStore() {
-//     return createStore<any, any, IReduxState, any> (
-//         root,
-//         preloadedState,
-//         composeEnhancers(applyMiddleware(thunk)),
-//     );
-// }
-
 export const store = configureStore({
     reducer: {
-        session: sessionSlice.reducer
+        session: sessionSlice.reducer,
+        servers: serversSlice.reducer
     },
     preloadedState,
     devTools: true

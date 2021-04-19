@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PersonPlusFill, PersonXFill, Truck } from 'react-bootstrap-icons';
 import SkinBox from '../SkinBox';
-import { IServerEvent } from '../../../redux/reducers/servers';
+import { IServerEvent } from '../../../redux/slices/servers';
 
 const DayzEventSkinPresentational = ({ event }: { event: IServerEvent }) => {
     try {

@@ -6,8 +6,8 @@ import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import {
     LOG_EVENTS_PRESENTATION_MODE_COMPACT,
     LOG_EVENTS_PRESENTATION_MODE_DEFAULT, TLogEventsPresentationMode
-} from '../redux/reducers/activeServer';
-import { IServerEvent } from '../redux/reducers/servers';
+} from '../redux/slices/activeServer';
+import { IServerEvent } from '../redux/slices/servers';
 
 const ServerEventPresentational = (
     { event, serverType, showPayload, onClick, presentationMode }:

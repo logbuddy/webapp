@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { ChevronDown, ChevronRight, Clipboard } from 'react-bootstrap-icons';
-import { switchInformationPanelCommand} from '../redux/reducers/activeServer';
+import { switchInformationPanelCommand} from '../redux/slices/activeServer';
 import { IConnectedComponentProps } from '../redux/store';
 
 

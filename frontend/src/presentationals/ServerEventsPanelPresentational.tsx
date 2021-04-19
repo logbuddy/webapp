@@ -1,14 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { IReduxState } from '../redux/reducers/root';
+import { IReduxState } from '../redux/slices/root';
 import {
     changeCurrentEventsResultPageCommand,
     cycleLogEventsPresentationModeCommand,
     loadEventIntoStructuredDataExplorerCommand,
     LOG_EVENTS_PRESENTATION_MODE_DEFAULT,
     retrieveEventsCommand, switchPollForYetUnseenEventsCommand
-} from '../redux/reducers/activeServer';
-import { IServerEvent } from '../redux/reducers/servers';
+} from '../redux/slices/activeServer';
+import { IServerEvent } from '../redux/slices/servers';
 import ServerEventPresentational from './ServerEventPresentational';
 import PaginatorPresentational from './PaginatorPresentational';
 import { DiscFill } from 'react-bootstrap-icons';

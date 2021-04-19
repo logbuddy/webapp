@@ -4,7 +4,7 @@ import { apiFetch } from '../util';
 import { IServerEvent } from './servers';
 import { IBasicAction, IErrorAction, IOperation, IReduxState } from './root';
 import { ThunkDispatch } from 'redux-thunk';
-import { ILogOutOfAccountSucceededEventAction } from './session';
+
 
 export const LOG_EVENTS_PRESENTATION_MODE_DEFAULT = 0;
 export const LOG_EVENTS_PRESENTATION_MODE_COMPACT = 1;
@@ -647,7 +647,7 @@ export type TActiveServerAction =
     | ISwitchShowStructuredDataExplorerAttributesCommandAction;
 
 
-const reducer = (state: IActiveServerState = initialState, action: TActiveServerAction | ILogOutOfAccountSucceededEventAction): IActiveServerState => {
+const reducer = (state: IActiveServerState = initialState, action: TActiveServerAction): IActiveServerState => {
 
     switch (action.type) {
 
@@ -975,14 +975,6 @@ const reducer = (state: IActiveServerState = initialState, action: TActiveServer
                 selectedTimelineIntervalEnd: action.selectedTimelineIntervalEnd
             };
         }
-
-
-        case 'LogOutOfAccountSucceededEvent': {
-            return {
-                ...initialState
-            }
-        }
-
 
         default: {
             return state;

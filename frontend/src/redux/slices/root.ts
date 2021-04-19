@@ -1,11 +1,7 @@
-import { AnyAction, combineReducers } from 'redux';
-import session, { sessionSlice, TSessionAction, ISessionState } from './session';
-import servers, { TServersAction, IServersState } from './servers';
-import activeServer, { TActiveServerAction, IActiveServerState } from './activeServer';
-
-export const reducer = {
-    session: sessionSlice,
-};
+import { AnyAction } from 'redux';
+import { ISessionState } from './sessionSlice';
+import { TActiveServerAction, IActiveServerState } from './activeServer';
+import { IServersState } from './serversSlice';
 
 export interface IBasicAction extends AnyAction {
     readonly type: string
@@ -27,4 +23,4 @@ export interface IReduxState {
     readonly activeServer: IActiveServerState
 }
 
-export type TValidAction = TSessionAction | TServersAction | TActiveServerAction;
+export type TValidAction = TActiveServerAction;

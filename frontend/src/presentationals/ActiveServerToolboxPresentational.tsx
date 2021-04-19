@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { IReduxState } from '../redux/reducers/root';
+import { IReduxState } from '../redux/slices/root';
 import React, { Fragment } from 'react';
 import {
     switchShowEventPayloadCommand,
     switchShowStructuredDataExplorerAttributesCommand
-} from '../redux/reducers/activeServer';
+} from '../redux/slices/activeServer';
 import { FileEarmarkCode, FileEarmarkCodeFill } from 'react-bootstrap-icons';
 
 const ActiveServerToolboxPresentational = () => {

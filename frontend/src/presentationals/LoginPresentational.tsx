@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import ErrorMessagePresentational from './ErrorMessagePresentational';
-import { IReduxState } from '../redux/reducers/root';
-import { logIntoAccountCommand } from '../redux/reducers/session';
+import { IReduxState } from '../redux/slices/root';
+import { logIntoAccountCommand } from '../redux/slices/sessionSlice';
 import { Redirect } from 'react-router-dom';
 
 const LoginPresentational = () => {

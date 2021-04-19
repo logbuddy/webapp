@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { IReduxState } from '../redux/reducers/root';
-import { createServerCommand, retrieveServersCommand } from '../redux/reducers/servers';
+import { IReduxState } from '../redux/slices/root';
+import { createServerCommand, retrieveServersCommand } from '../redux/slices/serversSlice';
 import { Redirect } from 'react-router-dom';
 import ActiveServerPresentational from './ActiveServerPresentational';
-import { makeServerActiveCommand } from '../redux/reducers/activeServer';
+import { makeServerActiveCommand } from '../redux/slices/activeServer';
 import { ArrowClockwise, Disc } from 'react-bootstrap-icons';
 import ErrorMessagePresentational from './ErrorMessagePresentational';
 
@@ -23,9 +23,11 @@ const ServersPresentational = () => {
         return (<Redirect to='/login' />);
     }
 
+    /*
     if (reduxState.activeServer.server.id !== null) {
         return <ActiveServerPresentational />;
     }
+    */
 
     const serverElements = [];
     for (let server of reduxState.servers.servers) {
@@ -89,7 +91,7 @@ const ServersPresentational = () => {
                     <form
                         className='row row-cols-sm-auto g-3 mt-2 mb-2'
                         onSubmit={ (e) => {
-                            reduxDispatch(createServerCommand(createServerTitle));
+                            reduxDispatch(createServerCommand({ title: createServerTitle }));
                             e.preventDefault();
                             setCreateServerTitle('');
                         }}

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 // @ts-ignore
 import { DatetimeHelper } from 'herodot-shared';
-import { IReduxState } from '../redux/reducers/root';
+import { IReduxState } from '../redux/slices/root';
 import {
     closeActiveServerCommand,
     closeStructuredDataExplorerCommand,
@@ -11,7 +11,7 @@ import {
     retrieveStructuredDataExplorerEventsCommand,
     selectedTimelineIntervalsUpdatedEvent,
     switchExamplePanelCommand
-} from '../redux/reducers/activeServer';
+} from '../redux/slices/activeServer';
 import { Redirect } from 'react-router-dom';
 import ServerTimelinePresentational from './ServerTimelinePresentational';
 import { X } from 'react-bootstrap-icons';

@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { IReduxState } from '../redux/reducers/root';
+import { IReduxState } from '../redux/slices/root';
 import { NavLink, Route, Switch, useLocation } from 'react-router-dom';
 import { PersonCircle } from 'react-bootstrap-icons';
-import { logOutOfAccountCommand } from '../redux/reducers/session';
+import { logOutOfAccountCommand } from '../redux/slices/sessionSlice';
 import LoginPresentational from './LoginPresentational';
 import RegistrationPresentational from './RegistrationPresentational';
 import ServersPresentational from './ServersPresentational';

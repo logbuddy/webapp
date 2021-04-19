@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronDown, ChevronRight } from 'react-bootstrap-icons';
-import { IServer } from '../redux/reducers/activeServer';
+import { IServer } from '../redux/slices/activeServer';
 
 const ServerExamplePanelPresentational = ({ server, isOpen, onSwitch }:
                                               { server: IServer, isOpen: boolean, onSwitch: () => any }) => (

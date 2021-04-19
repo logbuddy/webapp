@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import ErrorMessagePresentational from './ErrorMessagePresentational';
-import { IReduxState } from '../redux/reducers/root';
+import { IReduxState } from '../redux/slices/root';
 import { Redirect } from 'react-router-dom';
-import { registerAccountCommand } from '../redux/reducers/session';
+import { registerAccountCommand } from '../redux/slices/sessionSlice';
 
 const RegistrationPresentational = () => {
 
@@ -38,7 +38,7 @@ const RegistrationPresentational = () => {
                             <h1>Registration</h1>
                             <ErrorMessagePresentational message={reduxState.session.registrationOperation.errorMessage} />
                             <form
-                                onSubmit={ e => { reduxDispatch(registerAccountCommand(email, password)); e.preventDefault(); } }
+                                onSubmit={ e => { reduxDispatch(registerAccountCommand({ email, password })); e.preventDefault(); } }
                                 className='mt-4'
                             >
                                 <div className="mb-4">

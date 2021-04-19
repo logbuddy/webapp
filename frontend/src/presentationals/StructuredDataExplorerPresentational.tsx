@@ -2,14 +2,14 @@ import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 // @ts-ignore
 import { JsonHelper } from 'herodot-shared';
-import { IReduxState } from '../redux/reducers/root';
-import { IServerEvent } from '../redux/reducers/servers';
+import { IReduxState } from '../redux/slices/root';
+import { IServerEvent } from '../redux/slices/servers';
 import {
     addActiveStructuredDataExplorerAttributeCommand, removeActiveStructuredDataExplorerAttributeCommand,
     retrieveStructuredDataExplorerEventsCommand,
     selectActiveStructuredDataExplorerAttributeCommand,
     IServer
-} from '../redux/reducers/activeServer';
+} from '../redux/slices/activeServer';
 import { DashCircle, Disc, PlusCircle, X } from 'react-bootstrap-icons';
 import { format } from 'date-fns';
 import DayzEventSkinPresentational from './eventSkins/dayz/DayzEventSkinPresentational';
