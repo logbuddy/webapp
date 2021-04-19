@@ -3,11 +3,9 @@ import session, { sessionSlice, TSessionAction, ISessionState } from './session'
 import servers, { TServersAction, IServersState } from './servers';
 import activeServer, { TActiveServerAction, IActiveServerState } from './activeServer';
 
-export default combineReducers({
+export const reducer = {
     session: sessionSlice,
-    servers,
-    activeServer
-});
+};
 
 export interface IBasicAction extends AnyAction {
     readonly type: string

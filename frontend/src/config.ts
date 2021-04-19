@@ -3,7 +3,7 @@ const config = {
 };
 
 if (process.env.hasOwnProperty('NODE_ENV') && process.env.NODE_ENV === 'development') {
-    config.backendApiBaseUri += '/dev';
+    config.backendApiBaseUri = 'https://preprod.app.logbuddy.io/api';
 }
 
 export default config;

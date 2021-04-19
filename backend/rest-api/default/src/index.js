@@ -23,7 +23,7 @@ AWS.config.update({region: AWS_REGION});
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 const corsHeaders = (event) => (
-    ['http://localhost:3000', 'https://app.logbuddy.io'].includes(event.headers.origin)
+    ['http://localhost:3000', 'https://preprod.app.logbuddy.io', 'https://app.logbuddy.io'].includes(event.headers.origin)
         ? {
             'Access-Control-Allow-Headers' : 'Content-Type,X-Herodot-Webapp-Api-Key-Id',
             'Access-Control-Allow-Origin': event.headers.origin,
@@ -1035,6 +1035,10 @@ exports.handler = async (event) => {
             statusCode: 400,
             body: JSON.stringify(`Expected event to have httpMethod attribute.`)
         };
+    }
+
+    if (event.httpMethod === 'OPTIONS') {
+        return corsOptionsResponse(event);
     }
 
     if (!event.hasOwnProperty('pathParameters') || !event.pathParameters.hasOwnProperty('proxy')) {

@@ -1,14 +1,11 @@
-import { applyMiddleware, compose } from 'redux';
+import { compose } from 'redux';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { configureStore } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
-import root, { IReduxState, TValidAction } from './reducers/root';
-import { initialState as sessionInitialState } from './reducers/session';
+import {IReduxState, reducer, TValidAction} from './reducers/root';
+import {initialState as sessionInitialState, sessionSlice} from './reducers/session';
 import { initialState as serversInitialState } from './reducers/servers';
 import { initialState as activeServerInitialState } from './reducers/activeServer';
-
-// @ts-ignore
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 let preloadIsLoggedIn = sessionInitialState.isLoggedIn;
 let preloadLoggedInEmail = sessionInitialState.loggedInEmail;
@@ -44,9 +41,11 @@ const preloadedState: IReduxState = {
 // }
 
 export const store = configureStore({
-    reducer: root,
+    reducer: {
+        session: sessionSlice.reducer
+    },
     preloadedState,
-    middleware: [thunk]
+    devTools: true
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -1,7 +1,7 @@
 import { apiFetch } from '../util';
 import { IBasicAction, IErrorAction, IOperation, IReduxState } from './root';
 import { ThunkDispatch } from 'redux-thunk';
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export interface ISessionState {
     readonly isLoggedIn: boolean,
@@ -11,7 +11,7 @@ export interface ISessionState {
     readonly loginOperation: IOperation
 }
 
-const initialState = {
+const initialState: ISessionState = {
     isLoggedIn: false,
     loggedInEmail: null,
     webappApiKeyId: null,
@@ -25,26 +25,67 @@ const initialState = {
         justFinishedSuccessfully: false,
         errorMessage: null
     }
-} as ISessionState;
+};
 
 
-export const logIntoAccount = createAsyncThunk(
+export const logIntoAccountCommand = createAsyncThunk<{ webAppApiKeyId: string, email: string }, { email: string, password: string }, { rejectValue: string }>(
     'session/logIntoAccount',
-    async (arg: { email: string, password: string }, thunkAPI) => {
-        const response = await { webAppApiKeyId: '42', email: 'rfuh@freuzfh.de' };
-        return response as { webAppApiKeyId: string, email: string };
+    async (arg, thunkAPI) => {
+
+        let responseWasOk = true;
+        const result = await apiFetch('/webapp-api-keys/', 'POST', null, JSON.stringify({ email: arg.email, password: arg.password }))
+            .then(response => {
+                console.debug(response);
+                if (response.status === 201) {
+                    return response.json();
+                }
+                if (response.status === 404) {
+                    throw new Error(`User ${arg.email} not found.`);
+                }
+
+                throw new Error(`Unexpected response from server (code ${response.status}).`);
+            })
+
+            .then(parsedResponseContent => {
+                return parsedResponseContent;
+            })
+
+            .catch(function (error: Error) {
+                console.error(error);
+                return thunkAPI.rejectWithValue(error.message);
+            });
+
+        return { webAppApiKeyId: result, email: arg.email };
     }
-)
+);
 
 export const sessionSlice = createSlice({
     name: 'session',
     initialState,
     reducers: {
-
     },
     extraReducers: (builder => {
-        builder.addCase(logIntoAccount.fulfilled, (state, action) => {
-            action.payload.webAppApiKeyId
+        builder.addCase(logIntoAccountCommand.pending, (state, action) => {
+            state.isLoggedIn = false;
+            state.loginOperation.justFinishedSuccessfully = false;
+            state.loginOperation.isRunning = true;
+            state.loginOperation.errorMessage = null;
+        });
+
+        builder.addCase(logIntoAccountCommand.rejected, (state, action) => {
+            state.isLoggedIn = false;
+            state.loginOperation.justFinishedSuccessfully = false;
+            state.loginOperation.isRunning = false;
+            state.loginOperation.errorMessage = action.payload ?? 'Unknown error';
+        });
+
+        builder.addCase(logIntoAccountCommand.fulfilled, (state, action) => {
+            state.webappApiKeyId = action.payload.webAppApiKeyId;
+            state.loggedInEmail = action.payload.email;
+            state.isLoggedIn = true;
+            state.loginOperation.justFinishedSuccessfully = true;
+            state.loginOperation.isRunning = false;
+            state.loginOperation.errorMessage = null;
         });
     })
 });
@@ -141,34 +182,6 @@ const logIntoAccountSucceededEvent = (webappApiKeyId: string, email: string): IL
     webappApiKeyId,
     email
 });
-
-export const logIntoAccountCommand = (email: string, password: string) => (dispatch: ThunkDispatch<IReduxState, void, IBasicAction>) => {
-
-    dispatch(logIntoAccountStartedEvent());
-
-    let responseWasOk = true;
-    apiFetch('/webapp-api-keys/', 'POST', null, JSON.stringify({email, password}))
-        .then(response => {
-            console.debug(response);
-            if (!response.ok) {
-                responseWasOk = false;
-            }
-            return response.json();
-        })
-
-        .then(responseContentAsObject => {
-            if (!responseWasOk) {
-                dispatch(logIntoAccountFailedEvent(responseContentAsObject));
-            } else {
-                dispatch(logIntoAccountSucceededEvent(responseContentAsObject, email));
-            }
-        })
-
-        .catch(function (error) {
-            console.error(error)
-            dispatch(logIntoAccountFailedEvent(error.toString()));
-        });
-};
 
 
 interface ILogOutOfAccountStartedEventAction extends IBasicAction {

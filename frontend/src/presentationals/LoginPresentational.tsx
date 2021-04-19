@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import ErrorMessagePresentational from './ErrorMessagePresentational';
 import { IReduxState } from '../redux/reducers/root';
-import {logIntoAccount, logIntoAccountCommand} from '../redux/reducers/session';
+import { logIntoAccountCommand } from '../redux/reducers/session';
 import { Redirect } from 'react-router-dom';
 
 const LoginPresentational = () => {
@@ -29,7 +29,7 @@ const LoginPresentational = () => {
                     <h1>Login</h1>
                     <ErrorMessagePresentational message={reduxState.session.loginOperation.errorMessage} />
                     <form
-                        onSubmit={ e => { reduxDispatch(logIntoAccount({ email, password })); e.preventDefault(); } }
+                        onSubmit={ e => { reduxDispatch(logIntoAccountCommand({ email, password })); e.preventDefault(); } }
                         className='mt-4'
                     >
                         <div className="mb-4">
