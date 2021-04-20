@@ -1,5 +1,5 @@
 {
-  "name": "herodot-backend-rest-api-default",
+  "name": "herodot-webapp-backend-rest-api-default",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

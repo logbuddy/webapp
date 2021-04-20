@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 // @ts-ignore
-import { DatetimeHelper } from 'herodot-shared';
+import { DatetimeHelper } from 'herodot-webapp-shared';
 import { IReduxState } from '../redux/slices/root';
 import {
     activeServerSlice,

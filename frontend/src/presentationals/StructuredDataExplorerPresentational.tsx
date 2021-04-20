@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 // @ts-ignore
-import { JsonHelper } from 'herodot-shared';
+import { JsonHelper } from 'herodot-webapp-shared';
 import { IReduxState } from '../redux/slices/root';
 import { retrieveStructuredDataExplorerEventsCommand, activeServerSlice } from '../redux/slices/activeServerSlice';
 import { DashCircle, Disc, PlusCircle, X } from 'react-bootstrap-icons';

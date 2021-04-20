@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 // @ts-ignore
 import TimeRange from 'react-timeline-range-slider';
 // @ts-ignore
-import { DatetimeHelper } from 'herodot-shared';
+import { DatetimeHelper } from 'herodot-webapp-shared';
 import ActiveServerToolboxPresentational from './ActiveServerToolboxPresentational';
 
 const ServerTimelinePresentational = (

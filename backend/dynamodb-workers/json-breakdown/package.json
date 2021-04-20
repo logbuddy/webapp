@@ -1,5 +1,5 @@
 {
-  "name": "herodot-backend-dynamodb-workers-json-breakdown",
+  "name": "herodot-webapp-backend-dynamodb-workers-json-breakdown",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

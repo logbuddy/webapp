@@ -1,5 +1,5 @@
 {
-  "name": "herodot-shared",
+  "name": "herodot-webapp-shared",
   "version": "1.0.0",
   "type": "module",
   "main": "src/index.js",

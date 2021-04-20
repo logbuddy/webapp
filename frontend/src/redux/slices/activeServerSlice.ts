@@ -1,5 +1,5 @@
 // @ts-ignore
-import { DatetimeHelper } from 'herodot-shared';
+import { DatetimeHelper } from 'herodot-webapp-shared';
 import { IOperation, IReduxState } from './root';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { logOutOfAccountCommand } from './sessionSlice';
