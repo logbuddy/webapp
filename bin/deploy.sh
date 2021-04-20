@@ -62,7 +62,7 @@ pushd "$DIR/../frontend" || exit
   rm -rf node_modules
   nvm install
   nvm use
-  npm i --target_arch=x64 --target_platform=linux --target_libc=glibc --no-save
+  npm i --no-save
   npm run build
   source "$DIR/../../infrastructure-bootstrap/bin/assume-role.sh" "$AWS_ACCOUNT_ID"
   aws s3 cp --recursive --acl public-read build/ "s3://herodot-infra-webapp-$STAGE-frontend/"
