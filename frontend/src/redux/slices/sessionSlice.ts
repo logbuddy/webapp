@@ -69,7 +69,7 @@ export const logIntoAccountCommand = createAsyncThunk<{ webAppApiKeyId: string, 
             .then(parsedResponseContent => {
                 document.cookie = `loggedInEmail=${arg.email};path=/`;
                 document.cookie = `webappApiKeyId=${parsedResponseContent};path=/`;
-                return parsedResponseContent;
+                return { webAppApiKeyId: parsedResponseContent, email: arg.email };
             })
 
             .catch(function (error: Error) {
@@ -77,7 +77,7 @@ export const logIntoAccountCommand = createAsyncThunk<{ webAppApiKeyId: string, 
                 return thunkAPI.rejectWithValue(error.message);
             });
 
-        return { webAppApiKeyId: result, email: arg.email };
+        return result;
     }
 );
 
