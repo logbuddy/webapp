@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+if [ "$(uname)" != "Linux" ] || [ "$(arch)" != "x86_64" ]
+then
+  echo "For now, this can only be run on x86_64 Linux systems, but this is a $(arch) $(uname) system."
+  exit 1
+fi
+
+if [ ! -d "$HOME/.nvm/nvm.sh" ]
+then
+  echo "This script requires a working NVM setup with $HOME/.nvm/nvm.sh."
+  exit 1
+fi
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 DEPLOYMENT_NUMBER="$(date -u +%FT%TZ)"
@@ -7,7 +19,6 @@ STAGE="preprod"
 AWS_ACCOUNT_ID="619527075300"
 
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
-[ -x /opt/homebrew/bin/brew ] && [ -s "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh" ] && source "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh"
 
 echo "$DEPLOYMENT_NUMBER" > "$DIR/../deployment_number"
 
