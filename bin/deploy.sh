@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 
-if [ "$(uname)" != "Linux" ] || [ "$(arch)" != "x86_64" ]
+if [ ! -s "$HOME/.nvm/nvm.sh" ]
 then
-  echo "For now, this can only be run on x86_64 Linux systems, but this is a $(arch) $(uname) system."
-  exit 1
-fi
-
-if [ ! -d "$HOME/.nvm/nvm.sh" ]
-then
-  echo "This script requires a working NVM setup with $HOME/.nvm/nvm.sh."
-  exit 1
+  if [ ! -x /opt/homebrew/bin/brew ] || [ ! -s "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh" ]
+  then
+    echo "This script requires a working NVM installation."
+    exit 1
+  fi
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
@@ -19,14 +16,16 @@ STAGE="preprod"
 AWS_ACCOUNT_ID="619527075300"
 
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
+[ -x /opt/homebrew/bin/brew ] && [ -s "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh" ] && source "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh"
 
 echo "$DEPLOYMENT_NUMBER" > "$DIR/../deployment_number"
 
 pushd "$DIR/../backend/rest-api/default" || exit
   rm -rf build
+  rm -rf node_modules
   nvm install
   nvm use
-  npm i --no-save
+  npm i --target_arch=x64 --target_platform=linux --target_libc=glibc --no-save
   npm run build
   cp -a node_modules build/
   pushd build || exit
@@ -39,9 +38,10 @@ popd || exit
 
 pushd "$DIR/../backend/dynamodb-workers/json-breakdown" || exit
   rm -rf build
+  rm -rf node_modules
   nvm install
   nvm use
-  npm i --no-save
+  npm i --target_arch=x64 --target_platform=linux --target_libc=glibc --no-save
   npm run build
   cp -a node_modules build/
   pushd build || exit
@@ -59,9 +59,10 @@ popd || exit
 
 pushd "$DIR/../frontend" || exit
   rm -rf build
+  rm -rf node_modules
   nvm install
   nvm use
-  npm i --no-save
+  npm i --target_arch=x64 --target_platform=linux --target_libc=glibc --no-save
   npm run build
   source "$DIR/../../infrastructure-bootstrap/bin/assume-role.sh" "$AWS_ACCOUNT_ID"
   aws s3 cp --recursive --acl public-read build/ "s3://herodot-infra-webapp-$STAGE-frontend/"
