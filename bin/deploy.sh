@@ -18,7 +18,7 @@ AWS_ACCOUNT_ID="619527075300"
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
 [ -x /opt/homebrew/bin/brew ] && [ -s "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh" ] && source "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh"
 
-echo "$DEPLOYMENT_NUMBER" > "$DIR/../deployment_number"
+echo "$DEPLOYMENT_NUMBER" > "$DIR/../deployment_number.$STAGE"
 
 pushd "$DIR/../backend/rest-api/default" || exit
   rm -rf build
