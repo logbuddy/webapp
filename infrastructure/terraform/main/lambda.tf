@@ -39,20 +39,20 @@ data "aws_iam_policy" "AWSLambdaBasicExecutionRole" {
 }
 
 
-resource "aws_lambda_function" "rest_api_default" {
-  function_name = "rest_api_default"
+resource "aws_lambda_function" "rest_apis_default" {
+  function_name = "rest_apis_default"
 
-  s3_bucket = aws_s3_bucket.rest_api_lambdas.bucket
-  s3_key    = "default/${var.deployment_number}/rest_api_default.zip"
+  s3_bucket = aws_s3_bucket.rest_apis_lambdas.bucket
+  s3_key    = "default/${var.deployment_number}/rest_apis_default.zip"
 
   handler = "index.handler"
   runtime = "nodejs14.x"
 
-  role = aws_iam_role.lambda_rest_api_default.arn
+  role = aws_iam_role.lambda_rest_apis_default.arn
 }
 
-resource "aws_iam_role" "lambda_rest_api_default" {
-  name = "lambda_rest_api_default"
+resource "aws_iam_role" "lambda_rest_apis_default" {
+  name = "lambda_rest_apis_default"
 
   assume_role_policy = <<EOF
 {
@@ -72,15 +72,15 @@ EOF
 
 }
 
-resource "aws_iam_role_policy_attachment" "AWSLambdaBasicExecutionRole_to_lambda_rest_api_default" {
+resource "aws_iam_role_policy_attachment" "AWSLambdaBasicExecutionRole_to_lambda_rest_apis_default" {
   policy_arn = data.aws_iam_policy.AWSLambdaBasicExecutionRole.arn
-  role = aws_iam_role.lambda_rest_api_default.name
+  role = aws_iam_role.lambda_rest_apis_default.name
 }
 
-resource "aws_lambda_permission" "rest_api_default" {
+resource "aws_lambda_permission" "rest_apis_default" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.rest_api_default.function_name
+  function_name = aws_lambda_function.rest_apis_default.function_name
   principal     = "apigateway.amazonaws.com"
 
   source_arn = "${aws_apigatewayv2_api.default.execution_arn}/*/*"
@@ -88,9 +88,9 @@ resource "aws_lambda_permission" "rest_api_default" {
 
 
 
-resource "aws_iam_role_policy_attachment" "dynamodb_default_to_lambda_rest_api_default" {
+resource "aws_iam_role_policy_attachment" "dynamodb_default_to_lambda_rest_apis_default" {
   policy_arn = aws_iam_policy.dynamodb_default.arn
-  role = aws_iam_role.lambda_rest_api_default.name
+  role = aws_iam_role.lambda_rest_apis_default.name
 }
 
 

@@ -1,10 +1,10 @@
 {
-  "name": "herodot-webapp-backend-rest-api-default",
+  "name": "herodot-webapp-backend-rest-apis-default",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf build && rollup ./src/index.js --file ./build/index.js --format es && pushd build && zip rest_api_default.zip ./index.js && popd"
+    "build": "rm -rf build && rollup ./src/index.js --file ./build/index.js --format es && pushd build && zip rest_apis_default.zip ./index.js && popd"
   },
   "author": "",
   "license": "ISC",

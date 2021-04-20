@@ -20,7 +20,7 @@ AWS_ACCOUNT_ID="619527075300"
 
 echo "$DEPLOYMENT_NUMBER" > "$DIR/../deployment_number.$STAGE"
 
-pushd "$DIR/../backend/rest-api/default" || exit
+pushd "$DIR/../backend/rest-apis/default" || exit
   rm -rf build
   rm -rf node_modules
   nvm install
@@ -29,9 +29,9 @@ pushd "$DIR/../backend/rest-api/default" || exit
   npm run build
   cp -a node_modules build/
   pushd build || exit
-    zip -r rest_api_default.zip ./
+    zip -r rest_apis_default.zip ./
     source "$DIR/../../infrastructure-bootstrap/bin/assume-role.sh" "$AWS_ACCOUNT_ID"
-    aws s3 cp ./rest_api_default.zip "s3://herodot-infra-webapp-$STAGE-rest-api-lambdas/default/$DEPLOYMENT_NUMBER/rest_api_default.zip"
+    aws s3 cp ./rest_apis_default.zip "s3://herodot-infra-webapp-$STAGE-rest-apis-lambdas/default/$DEPLOYMENT_NUMBER/rest_apis_default.zip"
     source "$DIR/../../infrastructure-bootstrap/bin/unassume-role.sh"
   popd || exit
 popd || exit
