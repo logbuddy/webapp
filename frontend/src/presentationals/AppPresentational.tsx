@@ -158,7 +158,7 @@ const AppPresentational = () => {
                             <div className='col-lg-6 text-center ps-md-5 ps-5 pe-5'>
                                 <div className='bg-dark rounded p-3 pt-1 pb-2'>
                                     <div className='mt-3 mb-3'>
-                                        Here is what happens in the CLI
+                                        Here is what happens in the CLI:
                                     </div>
                                     <a href='/assets/images/logbuddy-cli-session-full.png'>
                                         <img src='/assets/images/logbuddy-cli-session-small.png' className='w-50' alt='LogBuddy Logo'/>
