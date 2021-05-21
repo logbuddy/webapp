@@ -12,8 +12,9 @@ fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 DEPLOYMENT_NUMBER="$(date -u +%FT%TZ)"
-STAGE="preprod"
-AWS_ACCOUNT_ID="619527075300"
+STAGE="$1"
+TFWORKSPACE="$2"
+AWS_ACCOUNT_ID="$3"
 
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
 [ -x /opt/homebrew/bin/brew ] && [ -s "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh" ] && source "$(/opt/homebrew/bin/brew --prefix)/opt/nvm/nvm.sh"
@@ -53,7 +54,7 @@ pushd "$DIR/../backend/dynamodb-workers/json-breakdown" || exit
 popd || exit
 
 pushd "$DIR/../infrastructure/terraform/main" || exit
-  terraform-0.15.0 workspace select "$STAGE"
+  terraform-0.15.0 workspace select "$TFWORKSPACE"
   terraform-0.15.0 apply -var deployment_number="$DEPLOYMENT_NUMBER"
 popd || exit
 
