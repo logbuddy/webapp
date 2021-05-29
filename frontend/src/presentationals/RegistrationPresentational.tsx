@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import ErrorMessagePresentational from './ErrorMessagePresentational';
 import { IReduxState } from '../redux/slices/root';
 import { Redirect } from 'react-router-dom';
-import { registerAccountCommand } from '../redux/slices/sessionSlice';
+import { registerAccountCommand } from '../features/session/sessionSlice';
 
 const RegistrationPresentational = () => {
 
@@ -45,7 +45,7 @@ const RegistrationPresentational = () => {
                                     <input className='form-control' type='text' name='name' data-testid='email-input' placeholder='E-Mail' value={email} onChange={ e => setEmail(e.target.value) } />
                                 </div>
                                 <div className="mb-4">
-                                    <input className='form-control' type='password' name='password' placeholder='Password' value={password} onChange={ e => setPassword(e.target.value) } />
+                                    <input className='form-control' type='password' name='password' data-testid='password-input' placeholder='Password' value={password} onChange={ e => setPassword(e.target.value) } />
                                 </div>
                                 <div className="mt-4 mb-3">
                                     {
@@ -56,7 +56,7 @@ const RegistrationPresentational = () => {
                                     {
                                         reduxState.session.registrationOperation.isRunning
                                         ||
-                                        <button className='btn btn-primary' type='submit'>Register</button>
+                                        <button className='btn btn-primary' type='submit' data-testid='submit-button'>Register</button>
                                     }
                                 </div>
                             </form>

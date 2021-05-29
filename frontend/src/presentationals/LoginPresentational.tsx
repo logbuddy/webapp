@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../redux/hooks';
 import ErrorMessagePresentational from './ErrorMessagePresentational';
-import { logIntoAccountCommand } from '../redux/slices/sessionSlice';
+import { logIntoAccountCommand } from '../features/session/sessionSlice';
 import { Redirect } from 'react-router-dom';
 
 const LoginPresentational = () => {
@@ -23,7 +23,7 @@ const LoginPresentational = () => {
                     {
                         reduxState.session.registrationOperation.justFinishedSuccessfully
                         &&
-                        <div className='alert alert-success'>Registration finished successfully. Please log in.</div>
+                        <div className='alert alert-success' data-testid='registration-successful-alert'>Registration finished successfully. Please log in.</div>
                     }
                     <h1>Login</h1>
                     <ErrorMessagePresentational message={reduxState.session.loginOperation.errorMessage} />
@@ -32,10 +32,10 @@ const LoginPresentational = () => {
                         className='mt-4'
                     >
                         <div className="mb-4">
-                            <input className='form-control' type='text' id='email' placeholder='E-Mail' value={email} onChange={ e => setEmail(e.target.value) } />
+                            <input className='form-control' type='text' id='email' data-testid='email-input' placeholder='E-Mail' value={email} onChange={ e => setEmail(e.target.value) } />
                         </div>
                         <div className="mb-4">
-                            <input className='form-control' type='password' id='password' placeholder='Password' value={password} onChange={ e => setPassword(e.target.value) } />
+                            <input className='form-control' type='password' id='password' data-testid='password-input' placeholder='Password' value={password} onChange={ e => setPassword(e.target.value) } />
                         </div>
                         <div className="mt-4">
                             {
@@ -46,7 +46,7 @@ const LoginPresentational = () => {
                             {
                                 reduxState.session.loginOperation.isRunning
                                 ||
-                                <button className='btn btn-primary' type='submit'>Log in</button>
+                                <button className='btn btn-primary' type='submit' data-testid='submit-button'>Log in</button>
                             }
                         </div>
                     </form>

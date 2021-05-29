@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { apiFetch } from '../util';
-import { IOperation } from './root';
+import { apiFetch } from '../../redux/util';
+import { IOperation } from '../../redux/slices/root';
 
 export interface ISessionState {
     readonly isLoggedIn: boolean,

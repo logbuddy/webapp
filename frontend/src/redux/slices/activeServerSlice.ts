@@ -2,7 +2,7 @@
 import { DatetimeHelper } from 'herodot-webapp-shared';
 import { IOperation, IReduxState } from './root';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { logOutOfAccountCommand } from './sessionSlice';
+import { logOutOfAccountCommand } from '../../features/session/sessionSlice';
 import { IServer, IServerEvent } from './serversSlice';
 import { apiFetch } from '../util';
 

@@ -1,4 +1,4 @@
-import { ISessionState } from './sessionSlice';
+import { ISessionState } from '../../features/session/sessionSlice';
 import { IActiveServerState } from './activeServerSlice';
 import { IServersState } from './serversSlice';
 

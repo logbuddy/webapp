@@ -1,7 +1,7 @@
 import { apiFetch } from '../util';
 import { IOperation, IReduxState } from './root';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { logOutOfAccountCommand } from './sessionSlice';
+import { logOutOfAccountCommand } from '../../features/session/sessionSlice';
 
 export interface IServerEvent {
     readonly id: string,

@@ -2,7 +2,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction, configureStore } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
 import { IReduxState } from './slices/root';
-import { initialState as sessionInitialState, sessionSlice } from './slices/sessionSlice';
+import { initialState as sessionInitialState, sessionSlice } from '../features/session/sessionSlice';
 import { initialState as serversInitialState, serversSlice } from './slices/serversSlice';
 import { initialState as activeServerInitialState, activeServerSlice } from './slices/activeServerSlice';
 

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { IReduxState } from '../redux/slices/root';
 import { NavLink, Route, Switch, useLocation } from 'react-router-dom';
 import { PersonCircle } from 'react-bootstrap-icons';
-import { logOutOfAccountCommand } from '../redux/slices/sessionSlice';
+import { logOutOfAccountCommand } from '../features/session/sessionSlice';
 import LoginPresentational from './LoginPresentational';
 import RegistrationPresentational from './RegistrationPresentational';
 import ServersPresentational from './ServersPresentational';
@@ -70,6 +70,7 @@ const AppPresentational = () => {
                                 ||
                                 <li
                                     id='loggedin-user-badge'
+                                    data-testid='loggedin-user-badge'
                                     className='nav-item text-end btn btn-outline-light btn-disabled text-light'
                                     onClick={
                                         () => {
