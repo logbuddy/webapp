@@ -34,6 +34,7 @@
     "test": "testcafe 'firefox:headless' tests/end-to-end",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://preprod.app.logbuddy.io",
   "eslintConfig": {
     "extends": [
       "react-app"
