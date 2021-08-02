@@ -9,8 +9,8 @@ resource "aws_apigatewayv2_stage" "default_api" {
   auto_deploy = true
 
   default_route_settings {
-    throttling_burst_limit = 10
-    throttling_rate_limit  = 10
+    throttling_burst_limit = lookup(var.workspace_to_apigateway_throttling_burst_limit, terraform.workspace)
+    throttling_rate_limit  = lookup(var.workspace_to_apigateway_throttling_rate_limit, terraform.workspace)
   }
 }
 

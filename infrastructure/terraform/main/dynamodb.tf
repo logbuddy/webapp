@@ -1,8 +1,8 @@
 resource "aws_dynamodb_table" "credentials" {
   name           = "credentials"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = lookup(var.workspace_to_dynamodb_read_capacity, terraform.workspace)
+  write_capacity = lookup(var.workspace_to_dynamodb_write_capacity, terraform.workspace)
   hash_key       = "email"
 
   attribute {
@@ -14,8 +14,8 @@ resource "aws_dynamodb_table" "credentials" {
 resource "aws_dynamodb_table" "server_events" {
   name           = "server_events"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = lookup(var.workspace_to_dynamodb_read_capacity, terraform.workspace)
+  write_capacity = lookup(var.workspace_to_dynamodb_write_capacity, terraform.workspace)
   hash_key       = "servers_id"
   range_key      = "sort_value"
 
@@ -36,8 +36,8 @@ resource "aws_dynamodb_table" "server_events" {
 resource "aws_dynamodb_table" "server_events_by_key" {
   name           = "server_events_by_key"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = lookup(var.workspace_to_dynamodb_read_capacity, terraform.workspace)
+  write_capacity = lookup(var.workspace_to_dynamodb_write_capacity, terraform.workspace)
   hash_key       = "servers_id_key"
   range_key      = "sort_value"
 
@@ -55,8 +55,8 @@ resource "aws_dynamodb_table" "server_events_by_key" {
 resource "aws_dynamodb_table" "server_events_by_value" {
   name           = "server_events_by_value"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = lookup(var.workspace_to_dynamodb_read_capacity, terraform.workspace)
+  write_capacity = lookup(var.workspace_to_dynamodb_write_capacity, terraform.workspace)
   hash_key       = "servers_id_value"
   range_key      = "sort_value"
 
@@ -74,8 +74,8 @@ resource "aws_dynamodb_table" "server_events_by_value" {
 resource "aws_dynamodb_table" "server_events_by_key_value" {
   name           = "server_events_by_key_value"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = lookup(var.workspace_to_dynamodb_read_capacity, terraform.workspace)
+  write_capacity = lookup(var.workspace_to_dynamodb_write_capacity, terraform.workspace)
   hash_key       = "servers_id_key_value"
   range_key      = "sort_value"
 
@@ -93,8 +93,8 @@ resource "aws_dynamodb_table" "server_events_by_key_value" {
 resource "aws_dynamodb_table" "servers" {
   name           = "servers"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = lookup(var.workspace_to_dynamodb_read_capacity, terraform.workspace)
+  write_capacity = lookup(var.workspace_to_dynamodb_write_capacity, terraform.workspace)
   hash_key       = "users_id"
   range_key      = "id"
 
@@ -112,8 +112,8 @@ resource "aws_dynamodb_table" "servers" {
 resource "aws_dynamodb_table" "users" {
   name           = "users"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = lookup(var.workspace_to_dynamodb_read_capacity, terraform.workspace)
+  write_capacity = lookup(var.workspace_to_dynamodb_write_capacity, terraform.workspace)
   hash_key       = "id"
 
   attribute {
@@ -125,8 +125,8 @@ resource "aws_dynamodb_table" "users" {
 resource "aws_dynamodb_table" "webapp_api_keys" {
   name           = "webapp_api_keys"
   billing_mode   = "PROVISIONED"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = lookup(var.workspace_to_dynamodb_read_capacity, terraform.workspace)
+  write_capacity = lookup(var.workspace_to_dynamodb_write_capacity, terraform.workspace)
   hash_key       = "id"
 
   attribute {

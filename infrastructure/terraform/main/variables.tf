@@ -25,3 +25,36 @@ variable "workspace_to_root_domain" {
     preprod = "preprod.app.logbuddy.io"
   }
 }
+
+variable "workspace_to_dynamodb_read_capacity" {
+  type = map(number)
+  default = {
+    default = 1
+    preprod = 1
+  }
+}
+
+variable "workspace_to_dynamodb_write_capacity" {
+  type = map(number)
+  default = {
+    default = 1
+    preprod = 1
+  }
+}
+
+variable "workspace_to_apigateway_throttling_burst_limit" {
+  type = map(number)
+  default = {
+    default = 1
+    preprod = 1
+  }
+}
+
+variable "workspace_to_apigateway_throttling_rate_limit" {
+  type = map(number)
+  default = {
+    default = 1
+    preprod = 1
+  }
+}
+
