@@ -126,6 +126,12 @@ const unknownWebappApiKeyIdResponse = (event) => ({
 
 
 const handleRegisterAccountRequest = async (event) => {
+
+    return {
+        statusCode: 501,
+        body: JSON.stringify('For the time being, no new users are accepted.')
+    };
+
     let newUserCredentialsJson;
     if (event.isBase64Encoded) {
         newUserCredentialsJson = (Buffer.from(event.body, 'base64')).toString('utf8');
@@ -893,6 +899,11 @@ const handleRetrieveServerEventsByRequest = async (event) => {
 
 
 const handleInsertServerEventsRequest = async (event) => {
+
+    return {
+        statusCode: 501,
+        body: JSON.stringify('For the time being, no new server events are accepted.')
+    };
 
     const verifyAuthInformation = async (userId, apiKeyId, serverId) => {
         return await new Promise((resolve, reject) => {
