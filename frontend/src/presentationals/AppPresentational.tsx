@@ -20,11 +20,6 @@ const AppPresentational = () => {
 
     return (
         <div>
-            <div className='alert alert-warning m-4'>
-                This project is currently inactive.
-                Get in touch at <a href='mailto:manuel@kiessling.net'>manuel@kiessling.net</a> for
-                further information.
-            </div>
             <nav className='navbar navbar-expand navbar-dark bg-secondary ps-1'>
                 <div className="container-fluid">
                     <Fragment>

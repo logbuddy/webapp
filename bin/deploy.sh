@@ -9,6 +9,12 @@ then
   fi
 fi
 
+if [ ! -x "$(which terraform-1.1.9)" ]
+then
+    echo "This script requires an installation of Terraform 1.1.9 available as terraform-1.1.9 on the path."
+    exit 1
+fi
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 DEPLOYMENT_NUMBER="$(date -u +%FT%TZ)"
@@ -54,8 +60,8 @@ pushd "$DIR/../backend/dynamodb-workers/json-breakdown" || exit
 popd || exit
 
 pushd "$DIR/../infrastructure/terraform/main" || exit
-  terraform-0.15.0 workspace select "$TFWORKSPACE"
-  terraform-0.15.0 apply -var deployment_number="$DEPLOYMENT_NUMBER"
+  terraform-1.1.9 workspace select "$TFWORKSPACE"
+  terraform-1.1.9 apply -var deployment_number="$DEPLOYMENT_NUMBER"
 popd || exit
 
 pushd "$DIR/../frontend" || exit
