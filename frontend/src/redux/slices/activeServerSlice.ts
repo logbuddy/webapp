@@ -174,7 +174,7 @@ export const startRepeatedlyRetrievingYetUnseenEventsCommand = createAsyncThunk<
                 thunkAPI.getState,
                 thunkAPI.dispatch
             ),
-            1000
+            2000
         );
 
 
@@ -183,7 +183,7 @@ export const startRepeatedlyRetrievingYetUnseenEventsCommand = createAsyncThunk<
             const activeServerState = getState().activeServer;
 
             if (   activeServerState.pollForYetUnseenEvents
-                || activeServerState.server !== null
+                && activeServerState.server !== null
                 && !activeServerState.retrieveYetUnseenEventsOperation.isRunning
             ) {
                 void dispatch(retrieveYetUnseenEventsCommand());
@@ -382,7 +382,7 @@ export const activeServerSlice = createSlice({
             state.retrieveEventsOperation.errorMessage = null;
             if (state.server !== null) {
                 state.server.events = action.payload;
-                state.server.latestEventSortValue = state.server.events[0].sortValue ?? null;
+                state.server.latestEventSortValue = state.server.events.length > 0 ? state.server.events[0].sortValue : null;
             }
         });
 
