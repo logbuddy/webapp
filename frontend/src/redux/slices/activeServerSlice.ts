@@ -92,7 +92,7 @@ export const retrieveEventsCommand = createAsyncThunk<Array<IServerEvent>, void,
             selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalEnd)
         };
 
-        const result = await apiFetch(
+        return await apiFetch(
             '/servers/events/',
             'GET',
             thunkAPI.getState().session.webappApiKeyId,
@@ -108,14 +108,10 @@ export const retrieveEventsCommand = createAsyncThunk<Array<IServerEvent>, void,
                 }
             })
 
-            .catch(function(error) {
+            .catch(function (error) {
                 console.error(error)
                 return thunkAPI.rejectWithValue(error.message);
             });
-
-        thunkAPI.dispatch(retrieveYetUnseenEventsCommand());
-
-        return result;
     }
 );
 
