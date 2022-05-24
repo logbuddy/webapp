@@ -10,6 +10,7 @@ import ServerEventPresentational from './ServerEventPresentational';
 import PaginatorPresentational from './PaginatorPresentational';
 import { DiscFill } from 'react-bootstrap-icons';
 import { IServerEvent } from '../redux/slices/serversSlice';
+import YetUnseenEventsRetriever from './YetUnseenEventsRetriever';
 
 const itemsPerPage = 25;
 
@@ -173,6 +174,8 @@ const ServerEventsPanelPresentational = () => {
                                     Not polling for new events.
                                 </span>
                         }
+
+                        <YetUnseenEventsRetriever/>
                     </div>
                 </div>
             </div>

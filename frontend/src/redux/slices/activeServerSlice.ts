@@ -1,10 +1,12 @@
 // @ts-ignore
 import { DatetimeHelper } from 'herodot-webapp-shared';
 import { IOperation, IReduxState } from './root';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AnyAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { logOutOfAccountCommand } from '../../features/session/sessionSlice';
 import { IServer, IServerEvent } from './serversSlice';
 import { apiFetch } from '../util';
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from '../store';
 
 export const LOG_EVENTS_PRESENTATION_MODE_DEFAULT = 0;
 export const LOG_EVENTS_PRESENTATION_MODE_COMPACT = 1;
@@ -157,19 +159,42 @@ export const retrieveNumberOfEventsPerHourCommand = createAsyncThunk<Array<numbe
 );
 
 
+let startRepeatedlyRetrievingYetUnseenEventsTimer: NodeJS.Timer | null = null;
+export const startRepeatedlyRetrievingYetUnseenEventsCommand = createAsyncThunk<void, void, { state: IReduxState }>(
+    'activeServer/startRepeatedlyRetrievingYetUnseenEvents',
+    async (arg, thunkAPI) => {
+
+        if (startRepeatedlyRetrievingYetUnseenEventsTimer !== null) {
+            clearInterval(startRepeatedlyRetrievingYetUnseenEventsTimer);
+            startRepeatedlyRetrievingYetUnseenEventsTimer = null;
+        }
+
+        startRepeatedlyRetrievingYetUnseenEventsTimer = setInterval(
+            () => dispatchRetrieveYetUnseenEventsCommand(
+                thunkAPI.getState,
+                thunkAPI.dispatch
+            ),
+            1000
+        );
+
+
+        const dispatchRetrieveYetUnseenEventsCommand = (getState: () => IReduxState, dispatch: ThunkDispatch<RootState, unknown, AnyAction>): void => {
+
+            const activeServerState = getState().activeServer;
+
+            if (   activeServerState.pollForYetUnseenEvents
+                || activeServerState.server !== null
+                && !activeServerState.retrieveYetUnseenEventsOperation.isRunning
+            ) {
+                void dispatch(retrieveYetUnseenEventsCommand());
+            }
+        };
+    }
+);
+
 export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEvent>, void, { state: IReduxState, rejectValue: string }>(
     'activeServer/retrieveYetUnseenEvents',
     async (arg, thunkAPI) => {
-        const repeat = () => {
-            if (thunkAPI.getState().activeServer.server !== null) {
-                setTimeout(
-                    () => {
-                        thunkAPI.dispatch(retrieveYetUnseenEventsCommand());
-                    },
-                    2000
-                );
-            }
-        }
 
         const server = thunkAPI.getState().activeServer.server ?? null;
 
@@ -177,12 +202,7 @@ export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEven
             return thunkAPI.rejectWithValue('server is null.');
         }
 
-        if (!thunkAPI.getState().activeServer.pollForYetUnseenEvents) {
-            repeat();
-            return thunkAPI.rejectWithValue('Polling disabled, skipping.');
-        }
-
-        const result = await apiFetch(
+        return await apiFetch(
             `/servers/yet-unseen-events/`,
             'GET',
             thunkAPI.getState().session.webappApiKeyId,
@@ -194,6 +214,7 @@ export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEven
                 selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalEnd)
             }
         )
+
             .then(response => {
                 console.debug(response);
                 if (response.status === 200) {
@@ -203,14 +224,10 @@ export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEven
                 }
             })
 
-            .catch(function(error) {
+            .catch(function (error) {
                 console.error(error)
                 return thunkAPI.rejectWithValue(error.message);
             });
-
-        repeat();
-
-        return result;
     }
 );
 
