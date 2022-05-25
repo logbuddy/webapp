@@ -188,6 +188,7 @@ export const startRepeatedlyRetrievingYetUnseenEventsCommand = createAsyncThunk<
     }
 );
 
+
 export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEvent>, void, { state: IReduxState, rejectValue: string }>(
     'activeServer/retrieveYetUnseenEvents',
     async (arg, thunkAPI) => {
