@@ -37,7 +37,7 @@ const getUTCDatetimeString = (val) => {
 };
 
 const dateObjectToUTCDatetimeString = (o) =>
-    JSON.stringify(o).replace('"', '').substr(0, 19) + 'Z'
+    JSON.stringify(o).replace('"', '').substring(0, 19) + 'Z'
 ;
 
 const getListOfHoursBetweenUtcDateStrings = (startString, endString) => {
@@ -45,19 +45,19 @@ const getListOfHoursBetweenUtcDateStrings = (startString, endString) => {
 
     let currentHour = new Date(
         Date.UTC(
-            startString.substr(0, 4),
-            parseInt(startString.substr(5, 2)) - 1,
-            startString.substr(8, 2),
-            startString.substr(11, 2),
+            startString.substring(0, 4),
+            parseInt(startString.substring(5, 2)) - 1,
+            startString.substring(8, 2),
+            startString.substring(11, 2),
         )
     );
 
     const endDate = new Date(
         Date.UTC(
-            endString.substr(0, 4),
-            parseInt(endString.substr(5, 2)) - 1,
-            endString.substr(8, 2),
-            endString.substr(11, 2),
+            endString.substring(0, 4),
+            parseInt(endString.substring(5, 2)) - 1,
+            endString.substring(8, 2),
+            endString.substring(11, 2),
         )
     );
 
