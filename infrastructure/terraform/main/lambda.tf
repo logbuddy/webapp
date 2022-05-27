@@ -138,9 +138,11 @@ resource "aws_iam_role_policy_attachment" "dynamodb_default_to_lambda_dynamodb_w
   role = aws_iam_role.lambda_dynamodb_workers_json_breakdown.name
 }
 
+/*
 resource "aws_lambda_event_source_mapping" "lambda_dynamodb_workers_json_breakdown" {
   event_source_arn  = aws_dynamodb_table.server_events.stream_arn
   function_name     = aws_lambda_function.dynamodb_workers_json_breakdown.arn
   starting_position = "LATEST"
   depends_on = [aws_iam_policy.dynamodb_default]
 }
+*/

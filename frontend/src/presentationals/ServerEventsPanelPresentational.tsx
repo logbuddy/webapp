@@ -75,7 +75,7 @@ const ServerEventsPanelPresentational = () => {
                     event={event}
                     serverType={server!.type}
                     showPayload={activeServer.showEventPayload}
-                    onClick={ () => reduxDispatch(activeServerSlice.actions.loadEventIntoStructuredDataExplorerCommand(event)) }
+                    onClick={ () => {} }
                     presentationMode={activeServer.logEventsPresentationMode}
                 />
                 {

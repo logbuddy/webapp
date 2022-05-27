@@ -37,7 +37,7 @@ const ServerEventPresentational = (
         return (
             <Fragment>
                 <div
-                    className={`row ${isExplorable && 'clickable'}`}
+                    className='row'
                     onClick={() =>
                         isExplorable
                         && onClick()
