@@ -38,12 +38,12 @@ const ActiveServerPresentational = () => {
             <ServerTimelinePresentational
                 initialSelectedTimelineIntervalStart={DatetimeHelper.timelineConfig.selectedTimelineIntervalStart}
                 initialSelectedTimelineIntervalEnd={DatetimeHelper.timelineConfig.selectedTimelineIntervalEnd}
-                currentSelectedTimelineIntervalStart={activeServer.selectedTimelineIntervalStart}
-                currentSelectedTimelineIntervalEnd={activeServer.selectedTimelineIntervalEnd}
-                timelineIntervalStart={activeServer.timelineIntervalStart}
-                timelineIntervalEnd={activeServer.timelineIntervalEnd}
+                currentSelectedTimelineIntervalStart={new Date(activeServer.selectedTimelineIntervalStart)}
+                currentSelectedTimelineIntervalEnd={new Date(activeServer.selectedTimelineIntervalEnd)}
+                timelineIntervalStart={new Date(activeServer.timelineIntervalStart)}
+                timelineIntervalEnd={new Date(activeServer.timelineIntervalEnd)}
                 numberOfEventsPerHour={server?.numberOfEventsPerHour ?? []}
-                onUpdateCallback={ (start: Date, end: Date) => reduxDispatch(activeServerSlice.actions.selectedTimelineIntervalsUpdatedEvent({
+                onUpdateCallback={ (start: string, end: string) => reduxDispatch(activeServerSlice.actions.selectedTimelineIntervalsUpdatedEvent({
                     selectedTimelineIntervalStart: start,
                     selectedTimelineIntervalEnd: end
                 })) }

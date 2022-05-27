@@ -26,7 +26,7 @@ const ServerTimelinePresentational = (
             timelineIntervalStart: Date,
             timelineIntervalEnd: Date,
             numberOfEventsPerHour: Array<number>,
-            onUpdateCallback: (start: Date, end: Date) => any,
+            onUpdateCallback: (start: string, end: string) => any,
             onChangeCallback: () => any
         }) => {
 
@@ -91,7 +91,7 @@ const ServerTimelinePresentational = (
                     timelineIntervalStart,
                     timelineIntervalEnd
                 ]}
-                onUpdateCallback={ (v: { time: Array<Date>}) => onUpdateCallback(v.time[0], v.time[1]) }
+                onUpdateCallback={ (v: { time: Array<Date>}) => onUpdateCallback(DatetimeHelper.dateObjectToUTCDatetimeString(v.time[0]), DatetimeHelper.dateObjectToUTCDatetimeString(v.time[1])) }
                 onChangeCallback={ () => onChangeCallback() }
             />
         </div>

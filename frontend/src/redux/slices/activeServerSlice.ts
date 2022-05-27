@@ -33,10 +33,10 @@ export interface IActiveServerState {
     readonly retrieveStructuredDataExplorerEventsOperation: IOperation,
     readonly eventLoadedInStructuredDataExplorer: null | IServerEvent,
     readonly activeStructuredDataExplorerAttributes: Array<IStructuredDataExplorerAttribute>,
-    readonly selectedTimelineIntervalStart: Date,
-    readonly selectedTimelineIntervalEnd: Date,
-    readonly timelineIntervalStart: Date,
-    readonly timelineIntervalEnd: Date
+    readonly selectedTimelineIntervalStart: string,
+    readonly selectedTimelineIntervalEnd: string,
+    readonly timelineIntervalStart: string,
+    readonly timelineIntervalEnd: string
 }
 
 export const initialState: IActiveServerState = {
@@ -70,10 +70,10 @@ export const initialState: IActiveServerState = {
     },
     eventLoadedInStructuredDataExplorer: null,
     activeStructuredDataExplorerAttributes: [],
-    selectedTimelineIntervalStart: DatetimeHelper.timelineConfig.selectedTimelineIntervalStart,
-    selectedTimelineIntervalEnd: DatetimeHelper.timelineConfig.selectedTimelineIntervalEnd,
-    timelineIntervalStart: DatetimeHelper.timelineConfig.timelineIntervalStart,
-    timelineIntervalEnd: DatetimeHelper.timelineConfig.timelineIntervalEnd,
+    selectedTimelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(DatetimeHelper.timelineConfig.selectedTimelineIntervalStart),
+    selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(DatetimeHelper.timelineConfig.selectedTimelineIntervalEnd),
+    timelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(DatetimeHelper.timelineConfig.timelineIntervalStart),
+    timelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(DatetimeHelper.timelineConfig.timelineIntervalEnd),
 };
 
 
@@ -88,8 +88,8 @@ export const retrieveEventsCommand = createAsyncThunk<Array<IServerEvent>, void,
 
         const queryParams: any = {
             serverId: server.id,
-            selectedTimelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalStart),
-            selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalEnd)
+            selectedTimelineIntervalStart: thunkAPI.getState().activeServer.selectedTimelineIntervalStart,
+            selectedTimelineIntervalEnd: thunkAPI.getState().activeServer.selectedTimelineIntervalEnd
         };
 
         return await apiFetch(
@@ -127,8 +127,8 @@ export const retrieveNumberOfEventsPerHourCommand = createAsyncThunk<Array<numbe
 
         const queryParams: any = {
             serverId: server.id,
-            selectedTimelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalStart),
-            selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalEnd)
+            selectedTimelineIntervalStart: thunkAPI.getState().activeServer.selectedTimelineIntervalStart,
+            selectedTimelineIntervalEnd: thunkAPI.getState().activeServer.selectedTimelineIntervalEnd
         };
 
         return await apiFetch(
@@ -207,8 +207,8 @@ export const retrieveYetUnseenEventsCommand = createAsyncThunk<Array<IServerEven
             {
                 serverId: server.id,
                 latestSeenSortValue: server.latestEventSortValue ?? 'null',
-                selectedTimelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalStart),
-                selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalEnd)
+                selectedTimelineIntervalStart: thunkAPI.getState().activeServer.selectedTimelineIntervalStart,
+                selectedTimelineIntervalEnd: thunkAPI.getState().activeServer.selectedTimelineIntervalEnd
             }
         )
 
@@ -245,8 +245,8 @@ export const retrieveStructuredDataExplorerEventsCommand = createAsyncThunk<Arra
 
         const queryParams: any = {
             serverId: server.id,
-            selectedTimelineIntervalStart: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalStart),
-            selectedTimelineIntervalEnd: DatetimeHelper.dateObjectToUTCDatetimeString(thunkAPI.getState().activeServer.selectedTimelineIntervalEnd)
+            selectedTimelineIntervalStart: thunkAPI.getState().activeServer.selectedTimelineIntervalStart,
+            selectedTimelineIntervalEnd: thunkAPI.getState().activeServer.selectedTimelineIntervalEnd
         };
 
         let i = 0;
@@ -354,9 +354,9 @@ export const activeServerSlice = createSlice({
             }
         },
 
-        selectedTimelineIntervalsUpdatedEvent: (state, action: PayloadAction<{ selectedTimelineIntervalStart: Date, selectedTimelineIntervalEnd: Date }>) => {
-            state.selectedTimelineIntervalStart = action.payload.selectedTimelineIntervalStart;
-            state.selectedTimelineIntervalEnd = action.payload.selectedTimelineIntervalEnd;
+        selectedTimelineIntervalsUpdatedEvent: (state, action: PayloadAction<{ selectedTimelineIntervalStart: string, selectedTimelineIntervalEnd: string }>) => {
+            state.selectedTimelineIntervalStart = DatetimeHelper.dateObjectToUTCDatetimeString(action.payload.selectedTimelineIntervalStart);
+            state.selectedTimelineIntervalEnd = DatetimeHelper.dateObjectToUTCDatetimeString(action.payload.selectedTimelineIntervalEnd);
         }
     },
 
