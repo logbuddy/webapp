@@ -25,10 +25,10 @@ const ActiveServerToolboxPresentational = () => {
                             className='small clickable d-inline-block'
                             onClick={ () => reduxDispatch(activeServerSlice.actions.switchShowStructuredDataExplorerAttributesCommand()) }
                         >
-                    <span className="explorer-key-value-badge">
-                        <span className="badge bg-primary ms-1 me-0 mb-1 explorer-key-value-badge-key">&nbsp;</span>
-                        <span className="badge bg-success ms-0 me-1 mb-1 explorer-key-value-badge-value">&nbsp;</span>
-                    </span>
+                            <span className="explorer-key-value-badge">
+                                <span className="badge bg-primary ms-1 me-0 mb-1 explorer-key-value-badge-key">&nbsp;</span>
+                                <span className="badge bg-success ms-0 me-1 mb-1 explorer-key-value-badge-value">&nbsp;</span>
+                            </span>
                         </div>
                     }
                     {
@@ -38,10 +38,10 @@ const ActiveServerToolboxPresentational = () => {
                             className='small clickable d-inline-block'
                             onClick={ () => reduxDispatch(activeServerSlice.actions.switchShowStructuredDataExplorerAttributesCommand()) }
                         >
-                    <span className="explorer-key-value-badge">
-                        <span className="badge bg-dark ms-1 me-0 mb-1 explorer-key-value-badge-key">&nbsp;</span>
-                        <span className="badge bg-secondary ms-0 me-1 mb-1 explorer-key-value-badge-value">&nbsp;</span>
-                    </span>
+                            <span className="explorer-key-value-badge">
+                                <span className="badge bg-dark ms-1 me-0 mb-1 explorer-key-value-badge-key">&nbsp;</span>
+                                <span className="badge bg-secondary ms-0 me-1 mb-1 explorer-key-value-badge-value">&nbsp;</span>
+                            </span>
                         </div>
                     }
                 </Fragment>
