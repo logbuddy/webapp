@@ -46,20 +46,24 @@ const getListOfHoursBetweenUtcDateStrings = (startString, endString) => {
     let currentHour = new Date(
         Date.UTC(
             startString.substring(0, 4),
-            parseInt(startString.substring(5, 2)) - 1,
-            startString.substring(8, 2),
-            startString.substring(11, 2),
+            parseInt(startString.substring(5, 7)) - 1,
+            startString.substring(8, 10),
+            startString.substring(11, 13),
         )
     );
+
+    console.debug(currentHour);
 
     const endDate = new Date(
         Date.UTC(
             endString.substring(0, 4),
-            parseInt(endString.substring(5, 2)) - 1,
-            endString.substring(8, 2),
-            endString.substring(11, 2),
+            parseInt(endString.substring(5, 7)) - 1,
+            endString.substring(8, 10),
+            endString.substring(11, 13),
         )
     );
+
+    console.debug(endDate);
 
     while (currentHour <= endDate) {
         hours.push(
