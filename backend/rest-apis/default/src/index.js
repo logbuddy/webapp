@@ -705,12 +705,14 @@ const handleRetrieveYetUnseenServerEventsRequest = async (event) => {
 
     const expressionAttributeValues = {
         ':servers_id': serverId,
+        ':start': selectedTimelineIntervalStart,
         ':selected_timeline_interval_end': selectedTimelineIntervalEnd
     }
 
-    if (latestSeenSortValue === null) {
-        expressionAttributeValues[':start'] = selectedTimelineIntervalStart
-    } else {
+    if (   latestSeenSortValue !== null
+        && latestSeenSortValue >= selectedTimelineIntervalStart
+        && latestSeenSortValue <= selectedTimelineIntervalEnd
+    ) {
         expressionAttributeValues[':start'] = latestSeenSortValue
     }
 
