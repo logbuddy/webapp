@@ -46,27 +46,6 @@ const ActiveServerToolboxPresentational = () => {
                     }
                 </Fragment>
             }
-
-            {
-                activeServer.showEventPayload
-                &&
-                <div
-                    className='clickable d-inline-block'
-                    onClick={ () => reduxDispatch(activeServerSlice.actions.switchShowEventPayloadCommand()) }
-                >
-                    <FileEarmarkCodeFill width='15px' height='15px' />
-                </div>
-            }
-            {
-                activeServer.showEventPayload
-                ||
-                <div
-                    className='clickable d-inline-block'
-                    onClick={ () => reduxDispatch(activeServerSlice.actions.switchShowEventPayloadCommand()) }
-                >
-                    <FileEarmarkCode width='15px' height='15px' />
-                </div>
-            }
         </div>
     );
 };
