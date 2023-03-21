@@ -29,7 +29,7 @@ const PaginatorPresentational = ({ numberOfItems, itemsPerPage, currentPage, onP
     return (
         <Fragment>
             <span className='pe-2'>
-                Result pages:
+                Result pages ({numberOfItems} items):
             </span>
             {pageElements}
         </Fragment>
