@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^14.14.37",
-    "date-fns": "^2.20.0",
-    "rollup": "^2.44.0"
+    "@types/node": "^14.18.40",
+    "date-fns": "^2.29.3",
+    "rollup": "^2.79.1"
   }
 }
