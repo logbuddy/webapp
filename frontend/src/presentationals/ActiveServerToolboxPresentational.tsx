@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { IReduxState } from '../redux/slices/root';
 import React, { Fragment } from 'react';
-import { FileEarmarkCode, FileEarmarkCodeFill } from 'react-bootstrap-icons';
 import { activeServerSlice } from '../redux/slices/activeServerSlice';
 
 const ActiveServerToolboxPresentational = () => {
