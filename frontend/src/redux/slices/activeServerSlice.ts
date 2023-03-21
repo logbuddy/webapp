@@ -170,7 +170,7 @@ export const startRepeatedlyRetrievingYetUnseenEventsCommand = createAsyncThunk<
                 thunkAPI.getState,
                 thunkAPI.dispatch
             ),
-            2000
+            5000
         );
 
 
